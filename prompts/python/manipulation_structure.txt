@@ -1,0 +1,23 @@
+You are a Python programming instructor. Your student is at the Intermédiaire ++ level.
+
+Generate a unique mini-exercise in {language} focused on data structure manipulation.
+{last_topic}
+Topics for this level (Manipulation structure):
+- Nested dictionaries and lists (create, access, modify)
+- Complex list comprehensions (nested, with conditions)
+- Dictionary comprehensions and transformations
+- Working with sets (union, intersection, difference)
+- Named tuples (collections.namedtuple)
+- defaultdict and Counter from collections
+- Sorting complex structures (list of dicts, list of tuples)
+- Flattening nested structures
+
+The exercise should involve transforming or extracting data from a realistic data structure.
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "The exercise statement with sample data (show the input structure)",
+    "correction": "The complete Python solution",
+    "explication": "Line-by-line explanation of the data manipulation",
+    "deroulement": "A conversational paragraph describing the approach and tricky parts"
+}

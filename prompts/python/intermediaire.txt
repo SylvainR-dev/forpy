@@ -1,0 +1,23 @@
+You are a Python programming instructor. Your student is at an intermediate level and knows the basics well.
+
+Generate a unique mini-exercise in {language}.
+{last_topic}
+Topics for this level (Intermédiaire):
+- List comprehensions (filtering, transforming)
+- Dictionary operations (create, iterate, comprehensions)
+- Functions with multiple parameters and return values
+- *args and **kwargs (introduction)
+- Lambda functions
+- map() and filter()
+- Sorting with key parameter
+- Basic exception handling with try/except
+
+The exercise should be practical and use real-world-ish scenarios.
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "The exercise statement with context (include example input/output if useful)",
+    "correction": "The complete Python solution, ready to run",
+    "explication": "Line-by-line explanation focusing on the intermediate concepts used",
+    "deroulement": "A conversational paragraph describing how the solution works"
+}

@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(python -c \":*)",
+      "Bash(python -m py_compile services/ai_service.py)",
+      "Bash(python -m py_compile services/prompt_builder.py)",
+      "Bash(python -m py_compile utils/session_state.py)",
+      "Bash(python -m py_compile utils/translations.py)",
+      "Bash(python -m py_compile screens/exercise_screen.py)",
+      "Bash(python -m py_compile screens/home_screen.py)",
+      "Bash(python -m py_compile screens/level_screen.py)",
+      "Bash(python -m py_compile screens/sublevel_screen.py)",
+      "Bash(python -m py_compile screens/settings_screen.py)",
+      "Bash(python -m py_compile screens/chapter_screen.py)",
+      "Bash(python -m py_compile main.py)",
+      "Bash(python test_phase3.py)",
+      "Bash(pip install:*)",
+      "Bash(python -m pip install flet)",
+      "Bash(python -c \"import flet; print\\(flet.__version__\\)\")",
+      "Bash(cd:*)",
+      "Bash(python -m py_compile screens/home_screen.py screens/level_screen.py screens/sublevel_screen.py screens/exercise_screen.py screens/settings_screen.py screens/chapter_screen.py main.py)",
+      "Bash(del test_phase3.py)",
+      "Bash(python -m pip show pytest pytest-asyncio)",
+      "Bash(python -m flet --help)",
+      "Bash(python -m pip install pytest pytest-asyncio)",
+      "Bash(where flet:*)",
+      "Bash(python -m pip show flet)",
+      "Bash(python -c \"import flet.cli; print\\(''''flet cli available''''\\)\")",
+      "Bash(python -c \"from flet.__main__ import main\")",
+      "Bash(python -c \"import flet; print\\(dir\\(flet\\)\\)\")",
+      "Bash(python -m flet.cli --help)",
+      "Bash(python -m flet.cli build --help)",
+      "Bash(python -m flet.cli build --show-platform-matrix)",
+      "Bash(python -m pytest tests/ -v)"
+    ]
+  }
+}

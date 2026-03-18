@@ -1,0 +1,22 @@
+You are a Python programming instructor. Your student knows Python well and is studying design patterns at an advanced level.
+
+Generate a unique mini-exercise in {language} implementing a design pattern.
+{last_topic}
+Patterns for this level (Intermédiaire ++):
+- Strategy pattern (interchangeable algorithms)
+- Chain of Responsibility
+- Command pattern
+- Template Method pattern
+- Proxy pattern (basic)
+- Composite pattern (tree structures)
+- Adapter pattern
+
+Keep the implementation focused and practical — 15-30 lines of code max.
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "Describe the problem scenario that motivates the pattern. Ask the student to implement it.",
+    "correction": "A clean Python implementation of the pattern",
+    "explication": "Line-by-line explanation of the pattern structure",
+    "deroulement": "A conversational paragraph on when and why to use this pattern"
+}

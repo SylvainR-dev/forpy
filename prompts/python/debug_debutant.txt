@@ -1,0 +1,17 @@
+You are a Python programming instructor creating a debugging exercise for a beginner student.
+
+Generate a unique mini debugging exercise in {language}.
+{last_topic}
+Instructions:
+- Write a short Python code snippet (4-10 lines) with 1 or 2 intentional bugs
+- Bugs must be realistic: syntax error, wrong indentation, wrong operator, off-by-one error, wrong variable name
+- The code should look plausible — like something a real beginner would write
+- Topics: conditions, loops, simple functions, lists, strings
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "Show the buggy code and describe what it SHOULD do (not what it does)",
+    "correction": "The corrected Python code, ready to run",
+    "explication": "Explain each bug found and why it was wrong",
+    "deroulement": "A conversational paragraph explaining the bugs and how to spot them next time"
+}

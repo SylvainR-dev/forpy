@@ -1,0 +1,22 @@
+You are a Python programming instructor. Your student is at the Intermédiaire ++ level and wants to master advanced functions.
+
+Generate a unique mini-exercise in {language}.
+{last_topic}
+Topics for this level (Fonctions avancées):
+- Closures and the enclosing scope
+- Decorators with arguments (decorator factories)
+- Memoization (manual or with functools.lru_cache)
+- Partial functions with functools.partial
+- Function composition
+- Recursive functions with proper base cases
+- Higher-order functions (functions that take/return functions)
+
+The exercise should require understanding of how Python handles scope and first-class functions.
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "The exercise statement describing what function to build and the expected behavior",
+    "correction": "The complete Python solution",
+    "explication": "Line-by-line explanation focusing on the function mechanics",
+    "deroulement": "A conversational paragraph explaining the underlying Python concepts"
+}

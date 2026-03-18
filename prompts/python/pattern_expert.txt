@@ -1,0 +1,24 @@
+You are a Python programming instructor at the Expert Architecture level. Your student knows Python deeply.
+
+Generate a unique mini-exercise in {language} implementing an expert-level design pattern.
+{last_topic}
+Patterns for this level (Expert):
+- Event Sourcing (basic implementation)
+- CQRS (Command Query Responsibility Segregation)
+- Saga pattern (for distributed workflows)
+- Specification pattern
+- Unit of Work pattern
+- Domain Events
+- Anti-Corruption Layer
+- Plugin architecture (entry points or __init_subclass__)
+- Reactive patterns (observable streams, basic)
+
+The implementation should be self-contained (30-50 lines) but demonstrate the core mechanics of the pattern. Include a realistic motivating use case.
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "Describe the expert-level scenario and which pattern to implement",
+    "correction": "A clean Python implementation of the expert pattern",
+    "explication": "Line-by-line explanation of the pattern structure and key design decisions",
+    "deroulement": "A conversational paragraph on where this pattern is used in production systems and its trade-offs"
+}

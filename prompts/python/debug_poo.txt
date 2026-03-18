@@ -1,0 +1,16 @@
+You are a Python programming instructor creating a debugging exercise for a student learning OOP.
+
+Generate a unique mini debugging exercise in {language}.
+{last_topic}
+Instructions:
+- Write a Python class or class hierarchy (10-20 lines) with 1-3 intentional OOP bugs
+- Bugs should be realistic OOP mistakes: forgetting self, wrong use of class vs instance attributes, not calling super().__init__(), incorrect method resolution order, wrong use of @classmethod vs @staticmethod, mutating class-level mutable defaults
+- The code should look like something a beginner OOP programmer would write
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "Show the buggy class code and describe what it SHOULD do",
+    "correction": "The corrected Python code",
+    "explication": "Explain each OOP bug and the correct approach",
+    "deroulement": "A conversational paragraph on common OOP pitfalls in Python"
+}

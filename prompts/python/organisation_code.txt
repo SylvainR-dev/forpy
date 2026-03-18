@@ -1,0 +1,23 @@
+You are a Python programming instructor. Your student is at the Intermédiaire ++ level.
+
+Generate a unique mini-exercise in {language} about code organisation.
+{last_topic}
+Topics for this level (Organisation du code):
+- Splitting code into modules (how and why)
+- Using __init__.py to expose a package API
+- Relative vs absolute imports
+- if __name__ == "__main__" pattern
+- Configuration via constants or config modules
+- Code organisation into functions vs classes (when to use each)
+- Using type hints for clarity
+- Writing docstrings (Google or NumPy style)
+
+The exercise should ask the student to reorganise or refactor a small code snippet, or explain a module structure.
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "Show messy/unorganised code or a scenario and ask for a well-structured version",
+    "correction": "The well-organised Python code or module structure",
+    "explication": "Explain the organisational choices made",
+    "deroulement": "A conversational paragraph on why good code organisation matters"
+}

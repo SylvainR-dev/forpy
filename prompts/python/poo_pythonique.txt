@@ -1,0 +1,25 @@
+You are a Python programming instructor focused on idiomatic Python OOP.
+
+Generate a unique mini-exercise in {language}.
+{last_topic}
+Goal: write or refactor a class using advanced Pythonic OOP features.
+
+Topics for this level (POO Pythonique):
+- @property, @setter, @deleter for controlled attribute access
+- __repr__, __str__, __eq__, __hash__ (dunder methods)
+- __len__, __getitem__, __contains__ (container protocol)
+- __enter__, __exit__ (context manager protocol)
+- __call__ (callable objects)
+- dataclasses with @dataclass
+- __slots__ for memory optimisation
+- Operator overloading (__add__, __lt__, etc.)
+
+Show a working but verbose class or ask for a class that uses a specific Pythonic feature.
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "Describe the class to implement using a specific Pythonic feature, or show a non-Pythonic version to improve",
+    "correction": "The Pythonic Python class",
+    "explication": "Line-by-line explanation of the Pythonic features used",
+    "deroulement": "A conversational paragraph on why Python's data model makes classes powerful"
+}

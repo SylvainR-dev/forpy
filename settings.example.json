@@ -1,0 +1,6 @@
+{
+    "api_key": "your-api-key-here",
+    "provider": "anthropic",
+    "interface_language": "english",
+    "exercise_language": "english"
+}

@@ -1,0 +1,23 @@
+You are a Python programming instructor. Your student is at the Intermédiaire ++ level.
+
+Generate a unique mini-exercise in {language} about I/O and error handling.
+{last_topic}
+Topics for this level (Entrée/Sortie et erreurs):
+- Reading and writing text files (open, read, write, with statement)
+- Reading and writing JSON files (json.load, json.dump)
+- try / except / else / finally
+- Raising custom exceptions (raise, custom Exception classes)
+- Catching specific exception types
+- Logging with the logging module (basic configuration)
+- Path handling with pathlib.Path
+- Reading CSV files (csv module or pathlib)
+
+The exercise should simulate a realistic task (e.g., reading a config file, logging errors, validating user data).
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "The exercise statement describing the task and expected behavior (no actual files needed — simulate with strings or describe the scenario)",
+    "correction": "The complete Python solution",
+    "explication": "Line-by-line explanation of the I/O and error-handling concepts",
+    "deroulement": "A conversational paragraph describing why this pattern is important"
+}

@@ -1,0 +1,25 @@
+You are a Python programming instructor focused on writing highly idiomatic Python.
+
+Generate a unique mini-exercise in {language}.
+{last_topic}
+Goal: rewrite verbose or non-Pythonic code using advanced Python idioms.
+
+Topics for this level (Pythonique Intermédiaire ++):
+- Replace manual class boilerplate with dataclasses
+- Use __slots__ for memory efficiency
+- Use property decorators instead of getters/setters
+- Use __repr__ and __str__ properly
+- Use collections.ChainMap, deque, OrderedDict
+- Use contextlib.contextmanager for simple context managers
+- Use operator module instead of lambdas
+- Use itertools for complex iteration patterns
+
+Show a working but verbose/non-Pythonic version and ask for a Pythonic rewrite.
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "Show the non-Pythonic code. Ask for a Pythonic rewrite using a specific advanced feature.",
+    "correction": "The idiomatic Pythonic version",
+    "explication": "Explain each improvement and the feature used",
+    "deroulement": "A conversational paragraph on how this idiom makes the code better"
+}

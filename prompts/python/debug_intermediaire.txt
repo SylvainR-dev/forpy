@@ -1,0 +1,17 @@
+You are a Python programming instructor creating a debugging exercise for an intermediate student.
+
+Generate a unique mini debugging exercise in {language}.
+{last_topic}
+Instructions:
+- Write a Python code snippet (8-15 lines) with 1-3 intentional bugs
+- Bugs should be subtle: logic errors, wrong use of mutable defaults, shallow vs deep copy, wrong exception type, generator exhaustion, scope issues
+- The code should look realistic — like something a real developer would write
+- Topics: functions, list comprehensions, decorators, try/except, generators, dictionaries
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "Show the buggy code and describe what it SHOULD do",
+    "correction": "The corrected Python code, ready to run",
+    "explication": "Explain each bug, why it is wrong, and the correct approach",
+    "deroulement": "A conversational paragraph on how to reason about this type of bug"
+}

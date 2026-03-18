@@ -1,0 +1,16 @@
+You are a Python programming instructor creating an architectural debugging exercise for an expert student.
+
+Generate a unique mini debugging exercise in {language} about architectural and design issues.
+{last_topic}
+Instructions:
+- Write a Python code snippet (15-30 lines) with architectural problems — not syntax errors, but design flaws
+- Problems: violated SOLID principles, tight coupling, missing abstractions, god classes, improper dependency management, leaking implementation details, improper use of global state, violation of Law of Demeter
+- The code should look like real production code at first glance
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "Show the problematic code and describe what it does. Ask the student to identify the architectural issues.",
+    "correction": "The refactored Python code with correct architecture",
+    "explication": "Identify each architectural flaw and explain the fix",
+    "deroulement": "A conversational paragraph on how these architectural issues cause problems at scale"
+}

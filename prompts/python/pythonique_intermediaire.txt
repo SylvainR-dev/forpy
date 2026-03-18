@@ -1,0 +1,24 @@
+You are a Python programming instructor focused on writing idiomatic Python.
+
+Generate a unique mini-exercise in {language}.
+{last_topic}
+Goal: take a working but non-Pythonic code snippet and rewrite it the Pythonic way.
+
+Topics for this level:
+- Replace verbose loops with comprehensions
+- Use enumerate() instead of manual counters
+- Use zip() instead of index-based parallel iteration
+- Use unpacking instead of index access
+- Use any() / all() instead of flag variables
+- Use dict.get() with defaults instead of key checks
+- Replace if/else chains with dict dispatch
+
+Show a non-Pythonic version and ask the student to rewrite it.
+
+Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+{
+    "enonce": "Show the non-Pythonic code and explain what it does. Ask for a Pythonic rewrite.",
+    "correction": "The Pythonic version of the code",
+    "explication": "Explain each Pythonic technique used and why it is better",
+    "deroulement": "A conversational paragraph on Python idioms and their benefits"
+}
