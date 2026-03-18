@@ -1,25 +1,70 @@
-You are a Python programming instructor focused on idiomatic Python OOP.
+PROMPT — Pythonique Avancé (Héritage & Polymorphisme)
+Le contexte
+● Agis comme un mentor Python pour niveau avancé.
+● L'objectif est d'apprendre à écrire du code orienté objet élégant et idiomatique en utilisant pleinement les mécanismes Python.
+● Génère 1 mini-exercice qui fait travailler l'héritage et le polymorphisme de manière pythonique.
+Les consignes pour chaque exercice :
 
-Generate a unique mini-exercise in {language}.
-{last_topic}
-Goal: write or refactor a class using advanced Pythonic OOP features.
 
-Topics for this level (POO Pythonique):
-- @property, @setter, @deleter for controlled attribute access
-- __repr__, __str__, __eq__, __hash__ (dunder methods)
-- __len__, __getitem__, __contains__ (container protocol)
-- __enter__, __exit__ (context manager protocol)
-- __call__ (callable objects)
-- dataclasses with @dataclass
-- __slots__ for memory optimisation
-- Operator overloading (__add__, __lt__, etc.)
+1) Un énoncé clair et simple
+L'exercice doit faire travailler :
+● Une classe parente et 2-3 classes enfants
+● super() pour appeler le constructeur parent
+● Une propriété avec validation (@property + @setter)
+● Polymorphisme (même méthode, comportement différent)
+● Une méthode de classe ou statique utile
+Règle importante : L'énoncé doit décrire une hiérarchie d'objets de la vie réelle (ex: Véhicule → Voiture/Velo, Employé → Développeur/Manager, Animal → Chien/Chat) avec des comportements qui diffèrent selon le type.
+Règle pour les données : Si l'exercice nécessite des instances spécifiques pour le test, fournis-les directement dans l'énoncé sous forme de code prêt à être copié. Par exemple : voitures = [Voiture("Toyota", 180), Voiture("Renault", 160)]
 
-Show a working but verbose class or ask for a class that uses a specific Pythonic feature.
 
-Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+2) Une correction de l'exercice avec du code Python
+Sous forme de code prêt à être copié, fournis :
+● La définition complète de la classe parente et des classes enfants
+● Un exemple d'utilisation qui démontre le polymorphisme
+● Un affichage clair des résultats
+
+
+3) Explication ligne par ligne
+Expliquer chaque partie du code :
+● Le rôle de la classe parente
+● L'utilisation de super().__init__() dans les classes enfants
+● Le fonctionnement des propriétés avec getter/setter
+● La différence entre méthode d'instance, de classe et statique
+● Comment le polymorphisme permet de traiter des objets différents uniformément
+
+
+4) Description du déroulement
+Règles précises pour cette partie :
+
+- Écrire **un seul paragraphe fluide** (pas de liste, pas de tirets, pas de découpage ligne par ligne).
+- Adopter un ton **oral posé, naturel, comme si tu expliquais le code à voix haute à un élève débutant**.
+- Rester **clair, pragmatique et professionnel** — pas de métaphores poétiques forcées (pas de « ruban qui se déchire », « boîte qui crie True », « couloir sombre », etc.).
+- Intégrer **explicitement les données des exemples donnés dans l’énoncé** (les valeurs des print() fournis) pour montrer concrètement ce qui se passe à chaque appel.
+- Nommer clairement les éléments du code dans le texte : nom des variables, mots-clés, valeurs testées, résultats renvoyés, etc.
+- Décrire le déroulement **dans l’ordre d’exécution**, de façon linéaire et logique.
+- Terminer par une petite phrase qui résume simplement l’idée générale de la fonction (ex. : « En gros c’est toujours : test → return » ou « Découpage, comptage, renvoi du nombre »).
+- Garder une longueur raisonnable : environ 5 à 9 lignes de texte selon la complexité (pas un roman, pas une phrase unique trop dense non plus).
+
+
+Les contraintes :
+● Une classe parente, 2-3 classes enfants
+● Au moins une propriété avec validation (@property + @setter)
+● Une méthode de classe ou statique utile
+● Un exemple d'utilisation qui traite tous les objets de la même façon (polymorphisme)
+● Un affichage clair des résultats
+Objectif pédagogique
+Comprendre comment l'héritage permet de réutiliser du code, comment l'encapsulation protège l'intégrité des données, et pourquoi le polymorphisme rend le code plus générique et maintenable.
+
+
+Retourne ta réponse UNIQUEMENT sous forme de JSON valide 
+avec exactement ces 4 clés :
 {
-    "enonce": "Describe the class to implement using a specific Pythonic feature, or show a non-Pythonic version to improve",
-    "correction": "The Pythonic Python class",
-    "explication": "Line-by-line explanation of the Pythonic features used",
-    "deroulement": "A conversational paragraph on why Python's data model makes classes powerful"
+    "enonce": "...",
+    "correction": "...",
+    "explication": "...",
+    "deroulement": "..."
 }
+Ne retourne rien d'autre que ce JSON.
+
+Ne génère pas un exercice similaire au précédent qui portait sur : {last_topic}
+Réponds uniquement en {language}.

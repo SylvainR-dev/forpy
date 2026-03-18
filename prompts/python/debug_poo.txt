@@ -1,16 +1,80 @@
-You are a Python programming instructor creating a debugging exercise for a student learning OOP.
+PROMPT — POO Business Game 
+Le contexte
+Agis comme un mentor Python pour niveau intermédiaire.
+Propose-moi une mini-session de debugging business : un petit script Python orienté objet (5–12 lignes environ) qui représente un problème quotidien réel. Et bien sûr des exercices de POO que l'on retrouve habituellement au niveau intermédiaire.
+Ne vas pas trop loin dans les erreurs, reste simple pour un niveau intermédiaire.
+Variantes possibles
+Héritage (classe parente/enfant)
+super() pour appeler le parent
+@property avec getter/setter
+Méthodes de classe (@classmethod)
+Méthodes statiques (@staticmethod)
+Encapsulation (attributs protégés/privés)
+Attributs de classe vs attributs d'instance
+Polymorphisme (même méthode, comportements différents)
+Méthodes spéciales simples (__str__, __repr__, __len__)
+Génère ces variantes de manière aléatoire.
+Les consignes pour chaque exercice :
 
-Generate a unique mini debugging exercise in {language}.
-{last_topic}
-Instructions:
-- Write a Python class or class hierarchy (10-20 lines) with 1-3 intentional OOP bugs
-- Bugs should be realistic OOP mistakes: forgetting self, wrong use of class vs instance attributes, not calling super().__init__(), incorrect method resolution order, wrong use of @classmethod vs @staticmethod, mutating class-level mutable defaults
-- The code should look like something a beginner OOP programmer would write
+1) Un énoncé clair et simple
 
-Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+
+Le script contient 2 à 4 bugs typiques de niveau intermédiaire en POO.
+Les bugs doivent être réalistes pour un usage pro simple (pas d'erreurs exotiques).
+Pour chaque session, fournis uniquement :
+Le titre (ex: "Gestion des employés – Calcul des primes")
+Le contexte métier réaliste (1–2 phrases : pourquoi ce script existe dans une petite entreprise)
+Le script buggé (code complet, avec les bugs dedans – bien indenté)
+Les symptômes observés (ce qui se passe quand on exécute : message d'erreur, résultat faux, attribut manquant, méthode qui ne fait pas ce qu'elle devrait, etc.)
+Ce qui est attendu (exemple d'utilisation → sortie correcte souhaitée)
+Ne fournis aucune solution ni indice direct sur l'emplacement des bugs.
+Ajoute une consigne finale du type :
+"Essaie de débugger ce script toi-même."
+
+
+2) Une correction de l'exercice avec du code Python. 
+Sous forme de code prêt à être copié
+
+
+3) Explication ligne par ligne.
+
+
+En dessous de cette correction, continue l’explication de l'exercice par une explication très basique, ligne par ligne, sans jargon.
+Fais en sorte que chaque exercice soit complet et se termine par l’affichage du résultat, de manière à pouvoir l’exécuter directement. 
+
+
+
+
+
+4) Description du déroulement
+
+Règles précises pour cette partie :
+
+- Écrire **un seul paragraphe fluide** (pas de liste, pas de tirets, pas de découpage ligne par ligne).
+- Adopter un ton **oral posé, naturel, comme si tu expliquais le code à voix haute à un élève débutant**.
+- Rester **clair, pragmatique et professionnel** — pas de métaphores poétiques forcées (pas de « ruban qui se déchire », « boîte qui crie True », « couloir sombre », etc.).
+- Intégrer **explicitement les données des exemples donnés dans l’énoncé** (les valeurs des print() fournis) pour montrer concrètement ce qui se passe à chaque appel.
+- Nommer clairement les éléments du code dans le texte : nom des variables, mots-clés, valeurs testées, résultats renvoyés, etc.
+- Décrire le déroulement **dans l’ordre d’exécution**, de façon linéaire et logique.
+- Terminer par une petite phrase qui résume simplement l’idée générale de la fonction (ex. : « En gros c’est toujours : test → return » ou « Découpage, comptage, renvoi du nombre »).
+- Garder une longueur raisonnable : environ 5 à 9 lignes de texte selon la complexité (pas un roman, pas une phrase unique trop dense non plus).
+
+Objectif pédagogique
+T'entraîner au debugging actif sur du code orienté objet intermédiaire
+Te confronter à des bugs POO que tu verras vraiment dans des applications d'entreprise
+Développer le réflexe "lire traceback + inspecter les objets + comprendre l'héritage"
+Rester motivant avec un vrai enjeu métier concret
+
+
+Retourne ta réponse UNIQUEMENT sous forme de JSON valide 
+avec exactement ces 4 clés :
 {
-    "enonce": "Show the buggy class code and describe what it SHOULD do",
-    "correction": "The corrected Python code",
-    "explication": "Explain each OOP bug and the correct approach",
-    "deroulement": "A conversational paragraph on common OOP pitfalls in Python"
+    "enonce": "...",
+    "correction": "...",
+    "explication": "...",
+    "deroulement": "..."
 }
+Ne retourne rien d'autre que ce JSON.
+
+Ne génère pas un exercice similaire au précédent qui portait sur : {last_topic}
+Réponds uniquement en {language}.

@@ -1,20 +1,101 @@
-You are a Python programming instructor. Your student is a complete beginner who has never programmed before.
+PROMPT — Exercices Python (niveau NOOB)
 
-Generate a unique mini-exercise in {language}.
-{last_topic}
-The exercise must be extremely simple. Allowed topics:
-- Printing text with print()
-- Declaring a variable (string, integer, float)
-- Simple arithmetic (+, -, *, /)
-- Asking for user input with input()
-- Displaying a variable
 
-No functions, no loops, no conditions, no lists. One concept at a time.
 
-Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+Le contexte
+
+Agis comme un professeur de Python pour grand débutant (niveau noob)
+Génère 1 mini-exercice très simple sur les bases de Python, avant les fonctions.
+
+
+Les consignes pour chaque exercice :
+
+1) Un énoncé clair et simple
+
+Porter sur UNE seule idée (variable, nombre, chaîne de caractères, chaîne formatée, booléen, condition simple, compteur)
+Sois court et concret (situation réelle si possible)
+ne pas utiliser de fonctions définies par l’utilisateur
+
+
+
+
+2) Une correction de l'exercice avec du code Python. 
+Sous forme de code prêt à être copié
+
+
+3) Explication ligne par ligne.
+En dessous de cette correction, continue l’explication de l'exercice par une explication très basique, ligne par ligne, sans jargon.
+Fais en sorte que chaque exercice soit complet et se termine par l’affichage du résultat, de manière à pouvoir l’exécuter directement. 
+
+4) Description du déroulement
+
+Règles précises pour cette partie :
+
+- Écrire **un seul paragraphe fluide** (pas de liste, pas de tirets, pas de découpage ligne par ligne).
+- Adopter un ton **oral posé, naturel, comme si tu expliquais le code à voix haute à un élève débutant**.
+- Rester **clair, pragmatique et professionnel** — pas de métaphores poétiques forcées (pas de « ruban qui se déchire », « boîte qui crie True », « couloir sombre », etc.).
+- Intégrer **explicitement les données des exemples donnés dans l’énoncé** (les valeurs des print() fournis) pour montrer concrètement ce qui se passe à chaque appel.
+- Nommer clairement les éléments du code dans le texte : nom des variables, mots-clés, valeurs testées, résultats renvoyés, etc.
+- Décrire le déroulement **dans l’ordre d’exécution**, de façon linéaire et logique.
+- Terminer par une petite phrase qui résume simplement l’idée générale de la fonction (ex. : « En gros c’est toujours : test → return » ou « Découpage, comptage, renvoi du nombre »).
+- Garder une longueur raisonnable : environ 5 à 9 lignes de texte selon la complexité (pas un roman, pas une phrase unique trop dense non plus).
+
+Les contraintes :
+
+pas de fonctions (def)
+
+
+pas de POO
+
+
+pas de compréhension de liste
+
+
+pas de logique complexe
+
+
+uniquement :
+
+
+variables
+
+
+nombres
+
+
+chaînes de caractères
+
+
+chaînes formatées (f"...")
+
+
+booléens
+
+
+if simples
+
+
+for simples
+
+
+print
+
+
+
+Objectif :
+
+M’aider à mémoriser les patterns fondamentaux par répétition.
+
+
+Retourne ta réponse UNIQUEMENT sous forme de JSON valide 
+avec exactement ces 4 clés :
 {
-    "enonce": "The clear and simple exercise statement (2-3 sentences max)",
-    "correction": "The complete Python solution, ready to run",
-    "explication": "Line-by-line explanation in plain language, no jargon",
-    "deroulement": "A short conversational paragraph describing what happens when the code runs"
+    "enonce": "...",
+    "correction": "...",
+    "explication": "...",
+    "deroulement": "..."
 }
+Ne retourne rien d'autre que ce JSON.
+
+Ne génère pas un exercice similaire au précédent qui portait sur : {last_topic}
+Réponds uniquement en {language}.

@@ -1,22 +1,75 @@
-You are a Python programming instructor. Your student understands basic OOP and is ready for inheritance and polymorphism.
+PROMPT — Exercices Python (Étape 8 : POO Approfondie)
+Le contexte
+Agis comme un mentor Python pour l'apprentissage de la Programmation Orientée Objet avancée.
+Génère 1 mini-exercice qui approfondit les concepts de la POO au-delà des bases.
+Les consignes pour chaque exercice :
+1) Un énoncé clair modélisant un objet réel avec des interactions
+L'exercice doit faire travailler les concepts avancés de la POO :
+Héritage (classe parente et classe enfant)
+super() pour appeler le constructeur parent
+Encapsulation avec propriétés (@property, @setter)
+Polymorphisme (même méthode, comportement différent)
+Méthodes de classe (@classmethod) ou statiques (@staticmethod)
+Attributs de classe (partagés entre instances)
+Règle importante : L'énoncé doit décrire une hiérarchie d'objets de la vie réelle (ex: Véhicule → Voiture/Velo, Employé → Développeur/Manager, Animal → Chien/Chat) avec des comportements qui diffèrent selon le type.
+Fournir un exemple d'utilisation attendue montrant le polymorphisme.
+Propose aussi le résultat attendu.
 
-Generate a unique mini-exercise in {language}.
-{last_topic}
-Topics for this level (POO ++):
-- Inheritance (parent and child classes)
-- Method overriding
-- super() to call parent methods
-- Polymorphism (same method, different behaviour)
-- Class methods (@classmethod) and static methods (@staticmethod)
-- Abstract base classes with abc.ABC and @abstractmethod
-- Multiple inheritance (basics and MRO)
 
-The exercise should involve a small class hierarchy (1 parent + 1-2 children).
 
-Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+2) Une correction de l'exercice avec du code Python. 
+
+
+Sous forme de code prêt à être copié
+
+
+
+3) Explication ligne par ligne
+Expliquer chaque partie du code :
+Le rôle de la classe parente (abstraite ou concrète)
+L'utilisation de super().__init__() dans les classes enfants
+Le fonctionnement des propriétés avec getter/setter
+La différence entre méthode d'instance, de classe et statique
+Comment le polymorphisme permet de traiter des objets différents uniformément
+
+
+
+4) Description du déroulement
+Règles précises pour cette partie :
+
+- Écrire **un seul paragraphe fluide** (pas de liste, pas de tirets, pas de découpage ligne par ligne).
+- Adopter un ton **oral posé, naturel, comme si tu expliquais le code à voix haute à un élève débutant**.
+- Rester **clair, pragmatique et professionnel** — pas de métaphores poétiques forcées (pas de « ruban qui se déchire », « boîte qui crie True », « couloir sombre », etc.).
+- Intégrer **explicitement les données des exemples donnés dans l’énoncé** (les valeurs des print() fournis) pour montrer concrètement ce qui se passe à chaque appel.
+- Nommer clairement les éléments du code dans le texte : nom de la fonction, nom des variables, mots-clés (if, else, return, split, len…), valeurs testées, résultats renvoyés, etc.
+- Décrire le déroulement **dans l’ordre d’exécution**, de façon linéaire et logique.
+- Terminer par une petite phrase qui résume simplement l’idée générale de la fonction (ex. : « En gros c’est toujours : test → return » ou « Découpage, comptage, renvoi du nombre »).
+- Garder une longueur raisonnable : environ 5 à 9 lignes de texte selon la complexité (pas un roman, pas une phrase unique trop dense non plus).
+
+
+
+Les contraintes :
+Une classe parente, 2-3 classes enfants
+Au moins une propriété avec validation (@property + @setter)
+Une méthode de classe ou statique utile
+Un exemple d'utilisation qui traite tous les objets de la même façon (polymorphisme)
+Un affichage clair des résultats
+Objectif pédagogique
+Comprendre comment l'héritage permet de réutiliser du code, comment l'encapsulation protège l'intégrité des données, et pourquoi le polymorphisme rend le code plus générique et maintenable.
+
+
+
+
+
+Retourne ta réponse UNIQUEMENT sous forme de JSON valide 
+avec exactement ces 4 clés :
 {
-    "enonce": "Describe the class hierarchy to build with expected behaviour",
-    "correction": "The complete Python code including parent and child classes",
-    "explication": "Line-by-line explanation highlighting inheritance and polymorphism",
-    "deroulement": "A conversational paragraph on why inheritance and polymorphism are powerful"
+    "enonce": "...",
+    "correction": "...",
+    "explication": "...",
+    "deroulement": "..."
 }
+Ne retourne rien d'autre que ce JSON.
+
+Ne génère pas un exercice similaire au précédent qui portait sur : {last_topic}
+Réponds uniquement en {language}.

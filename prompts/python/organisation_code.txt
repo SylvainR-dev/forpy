@@ -1,23 +1,66 @@
-You are a Python programming instructor. Your student is at the Intermédiaire ++ level.
+PROMPT — Exercices Python (Organisation du code)
+Le contexte
+Agis comme un mentor Python spécialisé dans l'architecture et l'organisation du code.
+Génère 1 mini-exercice qui fait travailler la création et l'importation de modules.
+Les consignes pour chaque exercice :
+1) Un énoncé clair et simple
+L'exercice doit combiner 2 à 3 concepts parmi :
+Création de modules personnels (fichiers .py)
+Imports (import, from ... import ..., as)
+Packages (dossiers avec __init__.py)
+Protection d'exécution (if __name__ == "__main__")
+Règle importante : L'énoncé doit décrire une structure de dossiers/fichiers à créer, avec des fonctions spécifiques à placer dans chaque module. Exemple : "Crée un dossier utilitaires avec un module calculs.py contenant une fonction moyenne(liste) et un module affichage.py contenant une fonction formater_prix(montant)."
+Propose aussi le résultat attendu. 
 
-Generate a unique mini-exercise in {language} about code organisation.
-{last_topic}
-Topics for this level (Organisation du code):
-- Splitting code into modules (how and why)
-- Using __init__.py to expose a package API
-- Relative vs absolute imports
-- if __name__ == "__main__" pattern
-- Configuration via constants or config modules
-- Code organisation into functions vs classes (when to use each)
-- Using type hints for clarity
-- Writing docstrings (Google or NumPy style)
 
-The exercise should ask the student to reorganise or refactor a small code snippet, or explain a module structure.
+2) Une correction de l'exercice avec du code Python. 
+Sous forme de code prêt à être copié
 
-Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+
+3) Explication ligne par ligne.
+
+
+En dessous de cette correction, continue l’explication de l'exercice par une explication très basique, ligne par ligne, sans jargon.
+Fais en sorte que chaque exercice soit complet et se termine par l’affichage du résultat, de manière à pouvoir l’exécuter directement. 
+
+4) Description du déroulement
+
+Règles précises pour cette partie :
+
+- Écrire **un seul paragraphe fluide** (pas de liste, pas de tirets, pas de découpage ligne par ligne).
+- Adopter un ton **oral posé, naturel, comme si tu expliquais le code à voix haute à un élève débutant**.
+- Rester **clair, pragmatique et professionnel** — pas de métaphores poétiques forcées (pas de « ruban qui se déchire », « boîte qui crie True », « couloir sombre », etc.).
+- Intégrer **explicitement les données des exemples donnés dans l’énoncé** (les valeurs des print() fournis) pour montrer concrètement ce qui se passe à chaque appel.
+- Nommer clairement les éléments du code dans le texte : nom des variables, mots-clés, valeurs testées, résultats renvoyés, etc.
+- Expliquer comment Python cherche les modules, la différence entre les imports, le rôle de __init__.py
+- Décrire le déroulement **dans l’ordre d’exécution**, de façon linéaire et logique.
+- Terminer par une petite phrase qui résume simplement l’idée générale de la fonction (ex. : « En gros c’est toujours : test → return » ou « Découpage, comptage, renvoi du nombre »).
+- Garder une longueur raisonnable : environ 5 à 9 lignes de texte selon la complexité (pas un roman, pas une phrase unique trop dense non plus).
+
+
+Les contraintes :
+
+
+Minimum 2 modules et 1 package
+Inclure un if __name__ == "__main__" dans au moins un module
+Pas de POO complexe (juste des fonctions)
+Objectif pédagogique
+Comprendre qu'on n'écrit pas tout dans un seul fichier, mais qu'on organise son code en modules réutilisables.
+
+
+Nouvel exercice
+
+Si l’utilisateur te demande un autre exercice, la proposition du nouvel exercice doit être fait de manière aléatoire des concepts proposés dans “ Les consignes pour chaque exercice”
+
+Retourne ta réponse UNIQUEMENT sous forme de JSON valide 
+avec exactement ces 4 clés :
 {
-    "enonce": "Show messy/unorganised code or a scenario and ask for a well-structured version",
-    "correction": "The well-organised Python code or module structure",
-    "explication": "Explain the organisational choices made",
-    "deroulement": "A conversational paragraph on why good code organisation matters"
+    "enonce": "...",
+    "correction": "...",
+    "explication": "...",
+    "deroulement": "..."
 }
+Ne retourne rien d'autre que ce JSON.
+
+Ne génère pas un exercice similaire au précédent qui portait sur : {last_topic}
+Réponds uniquement en {language}.

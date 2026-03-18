@@ -1,16 +1,91 @@
-You are a Python programming instructor creating an architectural debugging exercise for an expert student.
+DEBUG BUSINESS GAME – Niveau Architecte
+Le contexte
+Agis comme un mentor en architecture logicielle pour niveau avancé.
+Propose-moi une mini-session de debugging architectural : un petit script Python (15–25 lignes environ) qui représente un problème d'architecture dans un contexte métier réel. Les bugs doivent être des erreurs de conception qu'on trouve dans des bases de code professionnelles.
+Ne vas pas trop loin dans la complexité, reste sur des violations de principes architecturaux courants.
+Variantes possibles (générées aléatoirement)
+Violations de principes SOLID
+Single Responsibility : Une classe qui fait trop de choses
+Open/Closed : Code qui nécessite des modifications pour chaque ajout
+Liskov Substitution : Héritage mal utilisé qui casse le polymorphisme
+Interface Segregation : Interface trop grosse avec des méthodes inutiles
+Dependency Inversion : Dépendances vers des concret plutôt que des abstractions
+Patterns mal implémentés
+Singleton qui n'est pas vraiment unique
+Factory qui crée les mauvais objets
+Observer avec des notifications qui échouent
+Strategy mal découplée
+Dependency Injection manquante ou mal faite
+Problèmes d'architecture
+Couplage fort entre couches
+Code non testable (dépendances statiques, hardcodées)
+Duplication de logique métier
+Mélange des responsabilités (présentation/métier/données)
+Mauvaises abstractions
+Les consignes pour chaque exercice :
 
-Generate a unique mini debugging exercise in {language} about architectural and design issues.
-{last_topic}
-Instructions:
-- Write a Python code snippet (15-30 lines) with architectural problems — not syntax errors, but design flaws
-- Problems: violated SOLID principles, tight coupling, missing abstractions, god classes, improper dependency management, leaking implementation details, improper use of global state, violation of Law of Demeter
-- The code should look like real production code at first glance
+1) Un énoncé clair et simple
 
-Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+
+Le script contient 2 à 3 bugs architecturaux typiques.
+Les bugs doivent être réalistes pour une base de code professionnelle.
+Pour chaque session, fournis uniquement :
+Le titre (ex: "Calculateur de taxes – E-commerce")
+Le contexte métier réaliste (1–2 phrases : pourquoi ce code existe et son importance)
+Le script buggé (code complet, avec les bugs architecturaux – bien indenté)
+Les symptômes observés (ce qui se passe à l'usage : difficile d'ajouter une fonctionnalité, code cassé après modification, tests impossibles à écrire, comportement incohérent, etc.)
+Ce qui est attendu (qualité architecturale souhaitée : extensibilité, testabilité, respect des principes)
+Ne fournis aucune solution ni indice direct sur l'emplacement des bugs architecturaux.
+Ajoute une consigne finale du type :
+"Analyse ce code en tant qu'architecte : identifie les violations des principes SOLID, les problèmes de couplage, les mauvaises abstractions."
+
+
+2) Une correction de l'exercice avec du code Python. 
+Sous forme de code prêt à être copié
+
+
+
+3) Explication ligne par ligne.
+
+
+
+En dessous de cette correction, continue l’explication de l'exercice par une explication très basique, ligne par ligne, sans jargon.
+Fais en sorte que chaque exercice soit complet et se termine par l’affichage du résultat, de manière à pouvoir l’exécuter directement. 
+
+
+
+
+4) Description du déroulement
+
+Règles précises pour cette partie :
+
+- Écrire **un seul paragraphe fluide** (pas de liste, pas de tirets, pas de découpage ligne par ligne).
+- Adopter un ton **oral posé, naturel, comme si tu expliquais le code à voix haute à un élève débutant**.
+- Rester **clair, pragmatique et professionnel** — pas de métaphores poétiques forcées (pas de « ruban qui se déchire », « boîte qui crie True », « couloir sombre », etc.).
+- Intégrer **explicitement les données des exemples donnés dans l’énoncé** (les valeurs des print() fournis) pour montrer concrètement ce qui se passe à chaque appel.
+- Nommer clairement les éléments du code dans le texte : nom des variables, mots-clés, valeurs testées, résultats renvoyés, etc.
+- Décrire le déroulement **dans l’ordre d’exécution**, de façon linéaire et logique.
+- Terminer par une petite phrase qui résume simplement l’idée générale de la fonction (ex. : « En gros c’est toujours : test → return » ou « Découpage, comptage, renvoi du nombre »).
+- Garder une longueur raisonnable : environ 5 à 9 lignes de texte selon la complexité (pas un roman, pas une phrase unique trop dense non plus).
+
+
+Objectif pédagogique
+Développer l'œil pour identifier les mauvaises conceptions avant qu'elles ne deviennent ingérables
+Apprendre à reconnaître les violations des principes SOLID dans du code réel
+Pratiquer le refactoring vers des patterns appropriés
+Comprendre l'impact des décisions architecturales sur la maintenabilité
+Se préparer à des revues de code professionnelles
+
+
+Retourne ta réponse UNIQUEMENT sous forme de JSON valide 
+avec exactement ces 4 clés :
 {
-    "enonce": "Show the problematic code and describe what it does. Ask the student to identify the architectural issues.",
-    "correction": "The refactored Python code with correct architecture",
-    "explication": "Identify each architectural flaw and explain the fix",
-    "deroulement": "A conversational paragraph on how these architectural issues cause problems at scale"
+    "enonce": "...",
+    "correction": "...",
+    "explication": "...",
+    "deroulement": "..."
 }
+Ne retourne rien d'autre que ce JSON.
+
+Ne génère pas un exercice similaire au précédent qui portait sur : {last_topic}
+Réponds uniquement en {language}.

@@ -1,22 +1,63 @@
-You are a Python programming instructor. Your student is learning Object-Oriented Programming for the first time.
+PROMPT — Exercices Python (Introduction à la POO)
+Le contexte
+Agis comme un mentor Python pour l'apprentissage de la Programmation Orientée Objet.
+Génère 1 mini-exercice d'introduction à la POO, simple mais complet.
+Les consignes pour chaque exercice :
 
-Generate a unique mini-exercise in {language} introducing OOP basics.
-{last_topic}
-Topics for this level (Intro POO):
-- Defining a class with class
-- Instance attributes in __init__
-- Instance methods (self)
-- Creating objects (instantiation)
-- Accessing attributes and calling methods
-- __str__ for readable representation
-- Simple class with 2-4 methods
 
-Keep the class small and the scenario concrete (e.g., a BankAccount, a Car, a Student, a Rectangle).
+1) Un énoncé clair et simple
 
-Return ONLY a valid JSON object — no markdown, no extra text, no comments:
+
+L'exercice doit faire travailler les concepts fondamentaux de la POO :
+Définition d'une classe
+Attributs (variables d'instance)
+Méthodes (dont __init__)
+self
+Une méthode spéciale simple (__str__ de préférence)
+Règle importante : L'énoncé doit décrire un objet concret de la vie réelle (ex: Livre, CompteBancaire, Étudiant) avec des propriétés évidentes et des comportements simples. Fournir un exemple d'utilisation attendue.
+
+
+
+2) Une correction de l'exercice avec du code Python. 
+Sous forme de code prêt à être copié
+
+
+
+3) Explication ligne par ligne
+
+Expliquer chaque ligne de la classe : le rôle de class, de __init__, de self, des méthodes, et de __str__.
+
+
+
+4) Description du déroulement
+
+
+Un seul paragraphe fluide, ton oral posé et naturel
+Expliquer ce qui se passe quand on crée un objet : appel à __init__, création des attributs
+Montrer concrètement avec l'exemple fourni
+Expliquer la différence entre la classe (le plan) et l'objet (la réalisation)
+Terminer par une phrase qui résume l'intérêt de regrouper données et comportements
+
+
+
+Les contraintes :
+Pas d'héritage (pour l'instant)
+Pas de méthodes magiques complexes
+Une seule classe, 2-3 attributs, 2-3 méthodes
+Un exemple d'utilisation avec print
+Objectif pédagogique
+Comprendre la différence entre une classe et un objet, le rôle de self, et pourquoi on regroupe données et fonctions ensemble.
+
+
+Retourne ta réponse UNIQUEMENT sous forme de JSON valide 
+avec exactement ces 4 clés :
 {
-    "enonce": "Describe the class to build with its attributes and methods",
-    "correction": "The complete Python class with a few usage examples",
-    "explication": "Line-by-line explanation of the class structure",
-    "deroulement": "A conversational paragraph explaining what OOP is and why this class is useful"
+    "enonce": "...",
+    "correction": "...",
+    "explication": "...",
+    "deroulement": "..."
 }
+Ne retourne rien d'autre que ce JSON.
+
+Ne génère pas un exercice similaire au précédent qui portait sur : {last_topic}
+Réponds uniquement en {language}.
