@@ -25,7 +25,10 @@
         "error_json": "Could not parse the AI response. Please try again.",
         "error_generic": "An error occurred. Please try again.",
         "settings_saved": "Settings saved.",
-        "chapter_python": "Python"
+        "chapter_python": "Python",
+        "dark_mode": "Dark mode",
+        "preferences": "Preferences",
+        "coming_soon": "Coming soon"
     },
     "french": {
         "welcome": "Bienvenue sur FORPY",
@@ -53,6 +56,9 @@
         "error_json": "Impossible de parser la réponse de l'IA. Veuillez réessayer.",
         "error_generic": "Une erreur est survenue. Veuillez réessayer.",
         "settings_saved": "Paramètres enregistrés.",
-        "chapter_python": "Python"
+        "chapter_python": "Python",
+        "dark_mode": "Mode sombre",
+        "preferences": "Préférences",
+        "coming_soon": "Bientôt disponible"
     }
 }

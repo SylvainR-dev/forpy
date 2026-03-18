@@ -18,7 +18,7 @@ def build_chapter_screen(page: ft.Page, session: SessionState) -> ft.View:
 
     chapter_buttons = [
         ft.ElevatedButton(
-            ch["label"],
+            content=ch["label"],
             on_click=lambda _, c=ch: _select_chapter(page, session, c),
             width=260,
             height=48,

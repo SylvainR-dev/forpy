@@ -1,6 +1,7 @@
 import flet as ft
 from utils.session_state import SessionState
 from utils.translations import get_translations
+from utils.theme import get_colors
 
 # Ordered levels with their sublevels and corresponding prompt file keys
 LEVELS = [
@@ -64,37 +65,77 @@ LEVELS = [
 
 def build_level_screen(page: ft.Page, session: SessionState) -> ft.View:
     t = get_translations(session.interface_language)
+    c = get_colors(session.theme)
 
-    level_buttons = [
-        ft.ElevatedButton(
-            level["name"],
-            on_click=lambda _, lvl=level: _select_level(page, session, lvl),
-            width=280,
-            height=48,
-            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=8)),
+    items: list[ft.Control] = []
+    for level in LEVELS:
+        n = len(level["sublevels"])
+        badge = ft.Container(
+            content=ft.Text(
+                str(n),
+                size=11,
+                color="#ffffff",
+                weight=ft.FontWeight.BOLD,
+            ),
+            bgcolor=c["accent"],
+            border_radius=10,
+            padding=ft.padding.symmetric(horizontal=8, vertical=3),
         )
-        for level in LEVELS
-    ]
+        btn = ft.ElevatedButton(
+            content=level["name"],
+            bgcolor=c["btn_bg"],
+            color=c["btn_text"],
+            on_click=lambda _, lvl=level: _select_level(page, session, lvl),
+            style=ft.ButtonStyle(
+                shape=ft.RoundedRectangleBorder(radius=8),
+            ),
+        )
+        row = ft.Container(
+            content=ft.Row(
+                controls=[btn, badge],
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                vertical_alignment=ft.CrossAxisAlignment.CENTER,
+            ),
+            padding=ft.padding.only(left=30, right=30, top=8, bottom=8),
+        )
+        items.append(row)
+        items.append(
+            ft.Container(
+                content=ft.Divider(height=1, color=c["separator"], thickness=1),
+                padding=ft.padding.symmetric(horizontal=30),
+            )
+        )
 
     return ft.View(
         route="/level",
+        bgcolor=c["bg"],
         controls=[
             ft.AppBar(
-                title=ft.Text("Python"),
+                title=ft.Text("Python", color=c["text"]),
+                bgcolor=c["bg"],
                 leading=ft.IconButton(
                     ft.Icons.ARROW_BACK,
                     on_click=lambda _: page.go("/home"),
                     tooltip=t["back"],
+                    icon_color=c["accent"],
                 ),
             ),
             ft.Column(
                 controls=[
-                    ft.Text(t["choose_level"], size=20, weight=ft.FontWeight.W_500),
-                    ft.Divider(height=20),
-                    *level_buttons,
+                    ft.Container(
+                        content=ft.Text(
+                            t["choose_level"],
+                            size=18,
+                            weight=ft.FontWeight.W_500,
+                            color=c["text"],
+                        ),
+                        padding=ft.padding.only(left=30),
+                    ),
+                    ft.Container(height=4),
+                    *items,
                 ],
-                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                spacing=12,
+                horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
+                spacing=6,
             ),
         ],
         scroll=ft.ScrollMode.AUTO,
@@ -103,6 +144,5 @@ def build_level_screen(page: ft.Page, session: SessionState) -> ft.View:
 
 def _select_level(page: ft.Page, session: SessionState, level: dict) -> None:
     session.current_level = level["name"]
-    # Store sublevels for the sublevel screen
     session._current_sublevels = level["sublevels"]
     page.go("/sublevel")

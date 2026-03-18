@@ -32,7 +32,10 @@
       "Bash(python -m flet.cli --help)",
       "Bash(python -m flet.cli build --help)",
       "Bash(python -m flet.cli build --show-platform-matrix)",
-      "Bash(python -m pytest tests/ -v)"
+      "Bash(python -m pytest tests/ -v)",
+      "Bash(pip show:*)",
+      "Bash(python -c \"import flet; print\\(flet.VERSION\\)\")",
+      "Bash(python:*)"
     ]
   }
 }

@@ -1,6 +1,7 @@
 import flet as ft
 from utils.session_state import SessionState
 from utils.translations import get_translations
+from utils.theme import get_colors
 from services.ai_service import get_provider
 from services.prompt_builder import PromptBuilder
 
@@ -9,73 +10,97 @@ _builder = PromptBuilder()
 
 def build_exercise_screen(page: ft.Page, session: SessionState) -> ft.View:
     t = get_translations(session.interface_language)
+    c = get_colors(session.theme)
     sublevel_label = getattr(session, "_current_sublevel_label", session.current_sublevel)
 
-    # Mutable state for this view
     state = {"exercise": None, "error": None}
 
-    # --- UI refs ---
+    # --- Loading indicator ---
     loading_indicator = ft.Row(
         controls=[
-            ft.ProgressRing(width=24, height=24),
-            ft.Text(t["generating"], italic=True),
+            ft.ProgressRing(width=24, height=24, color=c["accent"]),
+            ft.Text(t["generating"], italic=True, color=c["text"]),
         ],
         visible=True,
         spacing=12,
     )
     error_text = ft.Text("", color=ft.Colors.RED_400, visible=False)
 
-    enonce_section = _section(t["statement"], "", visible=False)
-    correction_section = _section(t["correction"], "", visible=False, monospace=True)
-    explication_section = _section(t["explanation"], "", visible=False)
-    deroulement_section = _section(t["walkthrough"], "", visible=False)
+    # --- Body text widgets (updatable refs) ---
+    enonce_text = ft.Text("", selectable=True, color=c["text"], size=14)
+    correction_text = ft.Text(
+        "", selectable=True, color="#d4d4d4", font_family="monospace", size=13
+    )
+    explication_text = ft.Text("", selectable=True, color=c["text"], size=14)
+    deroulement_text = ft.Text("", selectable=True, color=c["text"], size=14)
+
+    # --- Cards ---
+    enonce_card = _card("📝", t["statement"], enonce_text, c)
+    correction_card = _card("✅", t["correction"], correction_text, c, is_code=True)
+    explication_card = _card("💡", t["explanation"], explication_text, c)
+    deroulement_card = _card("🎙️", t["walkthrough"], deroulement_text, c)
 
     another_btn = ft.ElevatedButton(
-        t["another_exercise"],
-        on_click=lambda _: _generate(page, session, t, state, loading_indicator,
-                                     error_text, enonce_section, correction_section,
-                                     explication_section, deroulement_section,
-                                     another_btn),
+        content=t["another_exercise"],
         visible=False,
-        width=260,
+        width=300,
         height=50,
-        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=8)),
+        bgcolor=c["btn_bg"],
+        color=c["btn_text"],
+        style=ft.ButtonStyle(
+            shape=ft.RoundedRectangleBorder(radius=10),
+        ),
+    )
+    another_btn.on_click = lambda _: _generate(
+        page, session, t, c, state,
+        loading_indicator, error_text,
+        enonce_card, enonce_text,
+        correction_card, correction_text,
+        explication_card, explication_text,
+        deroulement_card, deroulement_text,
+        another_btn,
     )
 
     view = ft.View(
         route="/exercise",
+        bgcolor=c["bg"],
         controls=[
             ft.AppBar(
-                title=ft.Text(sublevel_label),
+                title=ft.Text(sublevel_label, color=c["text"]),
+                bgcolor=c["bg"],
                 leading=ft.IconButton(
                     ft.Icons.ARROW_BACK,
                     on_click=lambda _: page.go("/sublevel"),
                     tooltip=t["back"],
+                    icon_color=c["accent"],
                 ),
             ),
             ft.Column(
                 controls=[
                     loading_indicator,
                     error_text,
-                    enonce_section,
-                    correction_section,
-                    explication_section,
-                    deroulement_section,
+                    enonce_card,
+                    correction_card,
+                    explication_card,
+                    deroulement_card,
+                    ft.Container(height=4),
                     another_btn,
                 ],
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                spacing=20,
+                spacing=16,
             ),
         ],
         scroll=ft.ScrollMode.AUTO,
     )
 
-    # Trigger first exercise generation after the view is rendered
     page.run_task(
-        _async_generate, page, session, t, state,
+        _async_generate,
+        page, session, t, c, state,
         loading_indicator, error_text,
-        enonce_section, correction_section,
-        explication_section, deroulement_section,
+        enonce_card, enonce_text,
+        correction_card, correction_text,
+        explication_card, explication_text,
+        deroulement_card, deroulement_text,
         another_btn,
     )
 
@@ -83,40 +108,68 @@ def build_exercise_screen(page: ft.Page, session: SessionState) -> ft.View:
 
 
 # ---------------------------------------------------------------------------
-# Section builder
+# Card builder
 # ---------------------------------------------------------------------------
 
-def _section(title: str, body: str, visible: bool = True, monospace: bool = False) -> ft.Column:
-    font_family = "monospace" if monospace else None
-    return ft.Column(
-        controls=[
-            ft.Text(title, size=16, weight=ft.FontWeight.BOLD),
-            ft.Divider(height=4),
-            ft.Text(body, selectable=True, font_family=font_family),
-        ],
-        visible=visible,
-        spacing=4,
+def _card(
+    icon: str,
+    title: str,
+    body_widget: ft.Text,
+    c: dict,
+    is_code: bool = False,
+) -> ft.Container:
+    inner: ft.Control
+    if is_code:
+        inner = ft.Container(
+            content=body_widget,
+            bgcolor="#1e1e1e",
+            border_radius=8,
+            padding=12,
+        )
+    else:
+        inner = body_widget
+
+    return ft.Container(
+        content=ft.Column(
+            controls=[
+                ft.Text(
+                    f"{icon}  {title}",
+                    color=c["accent"],
+                    size=14,
+                    weight=ft.FontWeight.BOLD,
+                ),
+                ft.Divider(height=1, color=c["border"], thickness=1),
+                inner,
+            ],
+            spacing=10,
+        ),
+        bgcolor=c["card_bg"],
+        border_radius=12,
+        padding=16,
+        border=ft.border.all(1, c["border"]),
+        visible=False,
     )
-
-
-def _update_section(section: ft.Column, body: str) -> None:
-    section.controls[2].value = body
-    section.visible = True
 
 
 # ---------------------------------------------------------------------------
 # Exercise generation
 # ---------------------------------------------------------------------------
 
-async def _async_generate(page, session, t, state, loading, error_text,
-                           enonce_sec, correction_sec, explication_sec,
-                           deroulement_sec, another_btn):
+async def _async_generate(
+    page, session, t, c, state,
+    loading, error_text,
+    enonce_card, enonce_text,
+    correction_card, correction_text,
+    explication_card, explication_text,
+    deroulement_card, deroulement_text,
+    another_btn,
+):
     loading.visible = True
     error_text.visible = False
-    enonce_sec.visible = False
-    correction_sec.visible = False
-    explication_sec.visible = False
-    deroulement_sec.visible = False
+    enonce_card.visible = False
+    correction_card.visible = False
+    explication_card.visible = False
+    deroulement_card.visible = False
     another_btn.visible = False
     page.update()
 
@@ -137,10 +190,18 @@ async def _async_generate(page, session, t, state, loading, error_text,
         session.update_last_topic(exercise.get("enonce", "")[:80])
         state["exercise"] = exercise
 
-        _update_section(enonce_sec, exercise.get("enonce", ""))
-        _update_section(correction_sec, exercise.get("correction", ""))
-        _update_section(explication_sec, exercise.get("explication", ""))
-        _update_section(deroulement_sec, exercise.get("deroulement", ""))
+        enonce_text.value = exercise.get("enonce", "")
+        enonce_card.visible = True
+
+        correction_text.value = exercise.get("correction", "")
+        correction_card.visible = True
+
+        explication_text.value = exercise.get("explication", "")
+        explication_card.visible = True
+
+        deroulement_text.value = exercise.get("deroulement", "")
+        deroulement_card.visible = True
+
         another_btn.visible = True
 
     except ValueError as exc:
@@ -155,11 +216,22 @@ async def _async_generate(page, session, t, state, loading, error_text,
         page.update()
 
 
-def _generate(page, session, t, state, loading, error_text,
-              enonce_sec, correction_sec, explication_sec, deroulement_sec, another_btn):
+def _generate(
+    page, session, t, c, state,
+    loading, error_text,
+    enonce_card, enonce_text,
+    correction_card, correction_text,
+    explication_card, explication_text,
+    deroulement_card, deroulement_text,
+    another_btn,
+):
     page.run_task(
-        _async_generate, page, session, t, state,
+        _async_generate,
+        page, session, t, c, state,
         loading, error_text,
-        enonce_sec, correction_sec, explication_sec, deroulement_sec,
+        enonce_card, enonce_text,
+        correction_card, correction_text,
+        explication_card, explication_text,
+        deroulement_card, deroulement_text,
         another_btn,
     )

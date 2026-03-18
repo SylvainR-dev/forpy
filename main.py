@@ -1,13 +1,14 @@
 import flet as ft
 from utils.session_state import SessionState
+from utils.theme import apply_theme
 
 session = SessionState()
 
 
 def main(page: ft.Page):
     page.title = "FORPY"
-    page.theme_mode = ft.ThemeMode.DARK
-    page.padding = 20
+    page.padding = 10
+    apply_theme(page, session.theme)
 
     def route_change(e):
         """
@@ -64,4 +65,4 @@ def main(page: ft.Page):
 
 
 if __name__ == "__main__":
-    ft.app(target=main)
+    ft.app(target=main, assets_dir="assets")

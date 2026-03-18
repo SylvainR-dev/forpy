@@ -692,6 +692,190 @@ Tester le changement de langue en cours de session
 
 
 
+
+Phase 5 — Design & Expérience utilisateur
+
+Objectif : Implémenter une interface visuelle soignée, cohérente et agréable sur tous les écrans, avec support dark/light mode. Le dark mode est activé par défaut au lancement.
+Tâches concrètes
+Implémenter le thème global dark mode par défaut
+Implémenter le thème light mode
+Implémenter le toggle dark/light mode dans les Paramètres
+Sauvegarder le choix du mode dans settings.json
+Redesigner l'écran d'accueil
+Redesigner l'écran des niveaux
+Redesigner l'écran des sous-niveaux
+Redesigner l'écran d'exercice avec bloc de code style VS Code
+Redesigner l'écran Paramètres
+Vérifier le responsive PC et mobile
+
+
+Palettes de couleurs
+Dark mode (défaut) :
+Fond principal     → #1a1a2e
+Fond cards         → #22223a
+Fond code          → #1e1e1e
+Accent bleu        → #4a9eff
+Texte principal    → #ffffff
+Texte code         → #d4d4d4
+Bordures           → #2a2a4a
+Séparateurs        → #4a9eff
+Boutons principaux → fond #ffffff, texte #1a1a2e
+
+
+Light mode :
+
+Fond principal     → #f5f7fa
+Fond cards         → #ffffff
+Fond code          → #1e1e1e
+Accent bleu        → #1a6ecc
+Texte principal    → #1a1a2e
+Texte code         → #d4d4d4
+Bordures           → #e0e4ec
+Séparateurs        → #1a6ecc
+Boutons principaux → fond #1a1a2e, texte #ffffff
+
+
+Bloc de code (identique dans les deux modes) :
+
+
+Fond               → #1e1e1e
+Texte              → #d4d4d4
+Keywords           → #569cd6 (bleu)
+Fonctions          → #dcdcaa (jaune)
+Strings            → #ce9178 (orange)
+Commentaires       → #6a9955 (vert)
+
+
+
+Composants par écran
+Écran d'accueil (home_screen.py) :
+
+AppBar :
+├── Titre FORPY centré (blanc dark / foncé light)
+└── Icône ⚙️ à droite (accent bleu)
+
+Hero :
+├── Icône logo 🐍 (72x72px, fond accent22,
+│   bordure accent66, border-radius 20px)
+├── Texte FORPY (28px, bold)
+└── Sous-titre "For Python — Learn by doing"
+    (12px, couleur texte principal)
+
+Boutons :
+├── Python → bouton principal
+├── Python ML — coming soon → opacity 0.4
+└── Python IA — coming soon → opacity 0.4
+
+
+Écran niveaux (level_screen.py) :
+
+
+AppBar :
+├── Bouton retour ← (accent bleu)
+└── Titre "Python"
+
+Contenu :
+├── Label "Choisissez votre niveau"
+└── Pour chaque niveau :
+    ├── Bouton niveau (taille adaptée au texte)
+    ├── Badge "X niveaux" (accent bleu, 11px)
+    └── Séparateur (1px, accent bleu)
+
+
+
+Écran sous-niveaux (sublevel_screen.py) :
+
+
+→ Même style que l'écran niveaux
+
+
+
+Écran exercice (exercise_screen.py) :
+
+
+4 cards :
+├── 📝 Énoncé   → titre accent bleu + texte principal
+├── ✅ Correction → titre accent bleu + bloc code VS Code
+├── 💡 Explication → titre accent bleu + texte principal
+└── 🎙️ Déroulement → titre accent bleu + texte principal
+
+Bouton "Un autre exercice" → bouton principal pleine largeur
+
+
+Écran Paramètres (settings_screen.py) :
+
+├── Fournisseurs IA → 3 boutons
+│   ├── Actif  → bouton principal
+│   └── Inactif → bouton principal opacity 0.4
+├── Clé API → champ masqué
+└── Préférences (card) :
+    ├── Toggle Dark mode ← sauvegardé dans settings.json
+    ├── Langue interface → dropdown accent bleu
+    └── Langue exercices → dropdown accent bleu
+
+Bouton "Sauvegarder" → bouton principal pleine largeur
+
+
+
+Implémentation du toggle dark/light
+
+
+# Dans settings.json
+{
+    "api_key": "...",
+    "provider": "anthropic",
+    "interface_language": "english",
+    "exercise_language": "english",
+    "theme": "dark"    # ← "dark" par défaut
+}
+
+# Dans main.py
+def apply_theme(page, theme):
+    if theme == "dark":
+        page.bgcolor = "#1a1a2e"
+        page.theme_mode = ft.ThemeMode.DARK
+    else:
+        page.bgcolor = "#f5f7fa"
+        page.theme_mode = ft.ThemeMode.LIGHT
+    page.update()
+
+# Au lancement → dark mode par défaut
+theme = session.settings.get("theme", "dark")
+apply_theme(page, theme)
+
+
+
+
+Livrables
+Tous les écrans redesignés en dark mode et light mode
+Dark mode activé par défaut au lancement
+Toggle dark/light fonctionnel dans les Paramètres
+Choix du mode sauvegardé dans settings.json
+Bloc de code style VS Code identique dans les deux modes
+Interface responsive PC et mobile
+Cohérence visuelle sur toutes les plateformes
+
+
+Points de vigilance
+Dark mode par défaut au premier lancement
+Tous les textes lisibles dans les deux modes
+Boutons principaux inversés selon le mode :
+Dark → fond blanc, texte foncé
+Light → fond foncé, texte blanc
+Séparateurs et badges en accent bleu dans les deux modes
+Bloc de code toujours en fond sombre #1e1e1e même en light mode
+Toggle sauvegarde immédiatement dans settings.json
+Changement de thème appliqué en temps réel sans redémarrage
+
+
+
+
+
+
+
+
+
+
 Synthèse globale — FORPY
 For Python (FORPY) est une application open source et gratuite pour apprendre Python. Plutôt que se concentrer sur un exercice long et laborieux, FORPY est conçu pour apprendre Python grâce à des mini-exercices générés par l'intelligence artificielle ; mais de manière industrielle (en volume et à grande vitesse). 
 Là où certaines personnes se focalisent sur 10 exercices spécifiques et laborieux, vous en aurez certainement vu dans le même temps peut-être 80 mini-exercices différents avec cette app. C'est colossal. 

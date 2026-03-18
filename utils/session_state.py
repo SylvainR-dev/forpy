@@ -8,6 +8,7 @@ DEFAULT_SETTINGS = {
     "provider": "anthropic",
     "interface_language": "english",
     "exercise_language": "english",
+    "theme": "dark",
 }
 
 
@@ -102,3 +103,11 @@ class SessionState:
 
     def update_last_topic(self, topic: str) -> None:
         self.last_exercise_topic = topic
+
+    @property
+    def theme(self) -> str:
+        return self._settings.get("theme", "dark")
+
+    @theme.setter
+    def theme(self, value: str) -> None:
+        self._settings["theme"] = value
