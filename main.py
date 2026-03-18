@@ -29,6 +29,7 @@ def main(page: ft.Page):
         from screens.sublevel_screen import build_sublevel_screen
         from screens.exercise_screen import build_exercise_screen
         from screens.settings_screen import build_settings_screen
+        from screens.pattern_screen import build_pattern_screen
 
         route = page.route
         page.views.clear()
@@ -39,13 +40,19 @@ def main(page: ft.Page):
         if route == "/settings":
             page.views.append(build_settings_screen(page, session))
 
-        elif route in ("/level", "/sublevel", "/exercise"):
+        elif route in ("/level", "/sublevel", "/pattern", "/exercise"):
             page.views.append(build_level_screen(page, session))
 
-            if route in ("/sublevel", "/exercise"):
+            if route in ("/sublevel", "/pattern", "/exercise"):
                 page.views.append(build_sublevel_screen(page, session))
 
-                if route == "/exercise":
+                if route in ("/pattern", "/exercise") and session.current_sublevel.startswith("pattern_"):
+                    page.views.append(build_pattern_screen(page, session))
+
+                    if route == "/exercise":
+                        page.views.append(build_exercise_screen(page, session))
+
+                elif route == "/exercise":
                     page.views.append(build_exercise_screen(page, session))
 
         page.update()

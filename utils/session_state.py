@@ -32,6 +32,8 @@ class SessionState:
         self.current_level: str = ""
         self.current_sublevel: str = ""
         self.last_exercise_topic: str = ""
+        self.current_pattern_category: str = ""
+        self.current_pattern: str = ""
 
         # Persistent settings
         self._settings: dict = self._load_settings()
@@ -95,9 +97,11 @@ class SessionState:
     # ------------------------------------------------------------------
 
     def set_sublevel(self, level: str, sublevel: str) -> None:
-        """Select a new sublevel and reset the anti-repetition topic."""
+        """Select a new sublevel and reset the anti-repetition topic and pattern."""
         if self.current_sublevel != sublevel:
             self.last_exercise_topic = ""
+            self.current_pattern_category = ""
+            self.current_pattern = ""
         self.current_level = level
         self.current_sublevel = sublevel
 

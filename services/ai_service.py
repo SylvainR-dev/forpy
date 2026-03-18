@@ -52,8 +52,8 @@ json_logger = _file_logger("forpy.json", "json_errors.log")
 # Configuration
 # ---------------------------------------------------------------------------
 
-CALL_TIMEOUT = 30   # seconds per attempt
-MAX_RETRIES = 2     # max attempts for timeout and JSON errors
+CALL_TIMEOUT = 60   # seconds per attempt
+MAX_RETRIES = 3     # max attempts for timeout and JSON errors
 
 # ---------------------------------------------------------------------------
 # Base class
@@ -265,7 +265,8 @@ def _parse_json(raw: str) -> dict:
       1. Strip markdown code fences.
       2. Try direct json.loads.
       3. Fallback: extract the first {...} block with regex.
-      4. If all attempts fail, raise ValueError("json").
+      4. Fallback: extract content from Markdown sections (## headers).
+      5. If all attempts fail, raise ValueError("json").
 
     Missing fields are logged as a warning but do NOT raise —
     partial data is better than no data.
@@ -277,8 +278,8 @@ def _parse_json(raw: str) -> dict:
     # Attempt 1 — direct parse
     try:
         data = json.loads(cleaned)
-    except json.JSONDecodeError:
-        pass
+    except json.JSONDecodeError as exc:
+        json_logger.warning("JSON direct parse failed: %s", exc)
 
     # Attempt 2 — extract first {...} block
     if data is None:
@@ -286,11 +287,20 @@ def _parse_json(raw: str) -> dict:
         if match:
             try:
                 data = json.loads(match.group())
-            except json.JSONDecodeError:
-                pass
+            except json.JSONDecodeError as exc:
+                json_logger.warning("JSON block extraction failed: %s", exc)
+
+    # Attempt 3 — extract content from Markdown ## sections
+    if data is None:
+        data = _parse_markdown_sections(raw)
+        if data is not None:
+            json_logger.warning("JSON parsing failed — recovered via Markdown section extraction")
 
     if data is None:
-        json_logger.error("JSON parsing failed completely. Raw (first 500 chars):\n%s", raw[:500])
+        json_logger.error(
+            "JSON parsing failed completely.\n--- RAW RESPONSE ---\n%s\n--- END RAW RESPONSE ---",
+            raw,
+        )
         raise ValueError("json")
 
     missing = _REQUIRED_KEYS - data.keys()
@@ -298,3 +308,49 @@ def _parse_json(raw: str) -> dict:
         json_logger.warning("AI response missing keys: %s", missing)
 
     return data
+
+
+def _parse_markdown_sections(raw: str) -> dict | None:
+    """Fallback: extract exercise fields from a Markdown-formatted response.
+
+    Recognises headers of the form:
+        ## Énoncé  /  ## 1)  /  ## 1. Énoncé  …
+        ## Correction  /  ## 2)  …
+        ## Explication  /  ## 3)  …
+        ## Déroulement  /  ## 4)  …
+
+    Returns a dict with the 4 keys, or None if no matching header is found.
+    """
+
+    def _map_header(text: str) -> str | None:
+        t = text.strip()
+        tl = t.lower()
+        if re.search(r"[eé]nonc[eé]", tl) or re.match(r"^1[\s.):-]|^1$", t):
+            return "enonce"
+        if re.search(r"correction", tl) or re.match(r"^2[\s.):-]|^2$", t):
+            return "correction"
+        if re.search(r"explication", tl) or re.match(r"^3[\s.):-]|^3$", t):
+            return "explication"
+        if re.search(r"d[eé]roulement", tl) or re.match(r"^4[\s.):-]|^4$", t):
+            return "deroulement"
+        return None
+
+    header_re = re.compile(r"^##\s+(.+)$", re.MULTILINE)
+    headers = list(header_re.finditer(raw))
+
+    if not headers:
+        return None
+
+    result: dict[str, str] = {k: "" for k in ("enonce", "correction", "explication", "deroulement")}
+    found_any = False
+
+    for i, match in enumerate(headers):
+        key = _map_header(match.group(1))
+        if key is None:
+            continue
+        found_any = True
+        content_start = match.end()
+        content_end = headers[i + 1].start() if i + 1 < len(headers) else len(raw)
+        result[key] = raw[content_start:content_end].strip()
+
+    return result if found_any else None

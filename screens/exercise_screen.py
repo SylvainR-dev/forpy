@@ -1,3 +1,4 @@
+import asyncio
 import flet as ft
 from utils.session_state import SessionState
 from utils.translations import get_translations
@@ -36,7 +37,7 @@ def build_exercise_screen(page: ft.Page, session: SessionState) -> ft.View:
 
     # --- Cards ---
     enonce_card = _card("📝", t["statement"], enonce_text, c)
-    correction_card = _card("✅", t["correction"], correction_text, c, is_code=True)
+    correction_card = _card("✅", t["correction"], correction_text, c, is_code=True, page=page)
     explication_card = _card("💡", t["explanation"], explication_text, c)
     deroulement_card = _card("🎙️", t["walkthrough"], deroulement_text, c)
 
@@ -70,7 +71,7 @@ def build_exercise_screen(page: ft.Page, session: SessionState) -> ft.View:
                 bgcolor=c["bg"],
                 leading=ft.IconButton(
                     ft.Icons.ARROW_BACK,
-                    on_click=lambda _: page.go("/sublevel"),
+                    on_click=lambda _: page.go("/pattern") if session.current_pattern else page.go("/sublevel"),
                     tooltip=t["back"],
                     icon_color=c["accent"],
                 ),
@@ -117,11 +118,48 @@ def _card(
     body_widget: ft.Text,
     c: dict,
     is_code: bool = False,
+    page: ft.Page = None,
 ) -> ft.Container:
     inner: ft.Control
     if is_code:
+        copy_icon = ft.Icon(ft.Icons.CONTENT_COPY, size=16, color="#d4d4d4")
+        copy_label = ft.Text("", size=12, color="#d4d4d4")
+        copy_btn = ft.TextButton(
+            content=ft.Row(
+                controls=[copy_icon, copy_label],
+                spacing=4,
+                tight=True,
+            ),
+        )
+
+        async def on_copy(_):
+            if page:
+                page.set_clipboard(body_widget.value or "")
+            copy_icon.name = ft.Icons.CHECK
+            copy_icon.color = "#4caf50"
+            copy_label.value = "Copié !"
+            copy_label.color = "#4caf50"
+            page.update()
+            await asyncio.sleep(2)
+            copy_icon.name = ft.Icons.CONTENT_COPY
+            copy_icon.color = "#d4d4d4"
+            copy_label.value = ""
+            copy_label.color = "#d4d4d4"
+            page.update()
+
+        copy_btn.on_click = lambda e: page.run_task(on_copy, e) if page else None
+
         inner = ft.Container(
-            content=body_widget,
+            content=ft.Column(
+                controls=[
+                    ft.Row(
+                        controls=[ft.Container(expand=True), copy_btn],
+                        alignment=ft.MainAxisAlignment.END,
+                    ),
+                    body_widget,
+                ],
+                spacing=4,
+            ),
             bgcolor="#1e1e1e",
             border_radius=8,
             padding=12,
@@ -182,6 +220,8 @@ async def _async_generate(
             sublevel=session.current_sublevel,
             exercise_language=session.exercise_language,
             last_topic=session.last_exercise_topic,
+            category=session.current_pattern_category,
+            pattern=session.current_pattern,
         )
 
         provider = get_provider(session.provider)

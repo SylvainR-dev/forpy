@@ -74,4 +74,7 @@ def build_sublevel_screen(page: ft.Page, session: SessionState) -> ft.View:
 def _select_sublevel(page: ft.Page, session: SessionState, sublevel: dict) -> None:
     session.set_sublevel(session.current_level, sublevel["key"])
     session._current_sublevel_label = sublevel["label"]
-    page.go("/exercise")
+    if sublevel["key"].startswith("pattern_"):
+        page.go("/pattern")
+    else:
+        page.go("/exercise")

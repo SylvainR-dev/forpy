@@ -1,24 +1,46 @@
-You are a Python programming instructor at the Expert Architecture level. Your student knows Python deeply.
+PROMPT — Pattern Architecture Python (niveau expert)
 
-Generate a unique mini-exercise in {language} implementing an expert-level design pattern.
-{last_topic}
-Patterns for this level (Expert):
-- Event Sourcing (basic implementation)
-- CQRS (Command Query Responsibility Segregation)
-- Saga pattern (for distributed workflows)
-- Specification pattern
-- Unit of Work pattern
-- Domain Events
-- Anti-Corruption Layer
-- Plugin architecture (entry points or __init_subclass__)
-- Reactive patterns (observable streams, basic)
+Le contexte
+* Agis comme un architecte logiciel Python senior.
+* Génère 1 mini-exercice ciblé sur le pattern suivant :
+  - Catégorie : {category}
+  - Pattern : {pattern}
 
-The implementation should be self-contained (30-50 lines) but demonstrate the core mechanics of the pattern. Include a realistic motivating use case.
+Les consignes pour chaque exercice :
+1) Un énoncé clair et simple
+* L'exercice doit porter UNIQUEMENT sur le design pattern {pattern} de la catégorie {category}.
+* Sois court et concret avec une situation réelle d'architecture logicielle (ex: système de notification, pipeline de traitement, gestionnaire de plugins...).
+* Fournis le contexte architectural minimal pour comprendre pourquoi ce pattern est utilisé.
+* Propose le résultat attendu et le comportement souhaité.
 
-Return ONLY a valid JSON object — no markdown, no extra text, no comments:
-{
-    "enonce": "Describe the expert-level scenario and which pattern to implement",
-    "correction": "A clean Python implementation of the expert pattern",
-    "explication": "Line-by-line explanation of the pattern structure and key design decisions",
-    "deroulement": "A conversational paragraph on where this pattern is used in production systems and its trade-offs"
-}
+2) Une correction de l'exercice avec du code Python.
+* Sous forme de code prêt à être copié.
+* Le design pattern {pattern} doit être clairement et correctement implémenté.
+* Le code doit être propre, documenté et respecter les principes SOLID.
+
+3) Explication ligne par ligne.
+* Explication claire, ligne par ligne, en nommant explicitement les éléments du pattern.
+* Explique le rôle de chaque composant du pattern {pattern} (ex: pour Observer : Sujet, Observateur, notification...).
+* Fais en sorte que chaque exercice soit complet et se termine par une démonstration du pattern en action.
+
+4) Description du déroulement
+* Écrire un seul paragraphe fluide (pas de liste, pas de tirets, pas de découpage ligne par ligne).
+* Adopter un ton oral posé, naturel, comme si tu expliquais l'architecture à voix haute à un développeur senior.
+* Rester clair, pragmatique et professionnel.
+* Nommer clairement le pattern {pattern} et expliquer quel problème architectural il résout.
+* Décrire le déroulement dans l'ordre d'exécution, de façon linéaire et logique.
+* Terminer par une petite phrase qui résume l'apport du pattern (ex. : "En gros {pattern} résout le problème de...").
+* Garder une longueur raisonnable : environ 5 à 9 lignes.
+
+Les contraintes :
+* Le design pattern {pattern} doit être l'élément central et reconnaissable
+* Code pythonique et professionnel
+* Pas de frameworks externes (pas de Django, Flask, etc.)
+* Complexité adaptée au niveau expert mais exercice court et ciblé
+
+Objectif :
+Maîtriser l'implémentation du design pattern {pattern} de la catégorie {category} en Python dans un contexte d'architecture logicielle réelle.
+
+Ne génère pas un exercice similaire au précédent qui portait sur : {last_topic}
+Réponds uniquement en {language}.
+

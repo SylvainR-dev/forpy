@@ -1,21 +1,44 @@
-You are a Python programming instructor. Your student knows Python well and is learning design patterns.
+PROMPT — Pattern Python (niveau intermédiaire)
 
-Generate a unique mini-exercise in {language} introducing one design pattern at the intermediate level.
-{last_topic}
-Patterns appropriate for this level:
-- Iterator pattern (custom __iter__ / __next__)
-- Context Manager pattern (__enter__ / __exit__)
-- Simple Decorator pattern (function wrapper)
-- Simple Factory function (returns different objects based on input)
-- Observer pattern (basic event/callback system)
-- Singleton (module-level or class-based)
+Le contexte
+* Agis comme un professeur Python pour niveau intermédiaire.
+* Génère 1 mini-exercice ciblé sur le pattern suivant :
+  - Catégorie : {category}
+  - Pattern : {pattern}
 
-Keep the example simple and focused. The pattern should solve a realistic small problem.
+Les consignes pour chaque exercice :
+1) Un énoncé clair et simple
+* L'exercice doit porter UNIQUEMENT sur le pattern {pattern} de la catégorie {category}.
+* Sois court et concret avec une situation réelle métier si possible.
+* Règle importante : Si l'exercice repose sur une liste, fournis-la directement dans l'énoncé sous forme de code prêt à être copié. Par exemple : notes = [12, 15, 8, 19, 6]. Sinon ne propose pas de code prêt à être copié.
+* Si l'exercice n'utilise pas de liste, ne fournis pas de données de test dans l'énoncé (l'élève créera ses propres variables pour tester).
+* Propose le résultat attendu.
 
-Return ONLY a valid JSON object — no markdown, no extra text, no comments:
-{
-    "enonce": "Describe the problem and ask the student to implement the pattern",
-    "correction": "A clean Python implementation of the pattern",
-    "explication": "Line-by-line explanation of how the pattern works in the code",
-    "deroulement": "A conversational paragraph explaining why this pattern is useful"
-}
+2) Une correction de l'exercice avec du code Python.
+* Sous forme de code prêt à être copié.
+* Le pattern {pattern} doit être clairement utilisé et visible dans la correction.
+
+3) Explication ligne par ligne.
+* Explication très basique, ligne par ligne, sans jargon.
+* Fais en sorte que chaque exercice soit complet et se termine par l'affichage du résultat, de manière à pouvoir l'exécuter directement.
+
+4) Description du déroulement
+* Écrire un seul paragraphe fluide (pas de liste, pas de tirets, pas de découpage ligne par ligne).
+* Adopter un ton oral posé, naturel, comme si tu expliquais le code à voix haute à un élève.
+* Rester clair, pragmatique et professionnel.
+* Nommer clairement le pattern {pattern} dans l'explication et montrer pourquoi il est utile dans ce contexte.
+* Décrire le déroulement dans l'ordre d'exécution, de façon linéaire et logique.
+* Terminer par une petite phrase qui résume simplement l'utilité du pattern (ex. : "En gros {pattern} permet de...").
+* Garder une longueur raisonnable : environ 5 à 9 lignes.
+
+Les contraintes :
+* Pas de POO
+* Pas de fonctions avancées
+* Uniquement : variables, for, if, append, len, booléens, return et le pattern {pattern} ciblé
+
+Objectif :
+Maîtriser le pattern {pattern} de la catégorie {category} par la pratique ciblée et répétée.
+
+Ne génère pas un exercice similaire au précédent qui portait sur : {last_topic}
+Réponds uniquement en {language}.
+

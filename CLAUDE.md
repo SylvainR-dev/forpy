@@ -871,6 +871,379 @@ Changement de thème appliqué en temps réel sans redémarrage
 
 
 
+Phase 6 — Écran Pattern (sélection catégorie + pattern)
+
+
+Objectif : Implémenter un écran dédié au sous-niveau "Pattern" permettant à l'utilisateur de cibler un pattern précis via un menu en deux colonnes — catégorie à gauche, patterns à droite — avant de générer un exercice ciblé.
+
+
+Tâches concrètes
+Créer le nouvel écran pattern_screen.py
+Ajouter la route /pattern dans main.py
+Implémenter le menu 2 colonnes (catégories + patterns)
+Injecter {category} et {pattern} dans les prompts pattern
+Mettre à jour session_state.py pour stocker la catégorie et le pattern sélectionnés
+Mettre à jour translations.json avec les nouvelles clés
+Mettre à jour prompt_builder.py pour gérer l'injection catégorie + pattern
+
+Flux utilisateur
+
+SubLevel : Pattern (ex: Intermédiaire)
+    ↓
+Écran Pattern :
+├── Colonne gauche → Catégorie sélectionnée
+└── Colonne droite → Liste des patterns
+    de la catégorie
+    ↓
+Clic sur un pattern
+    ↓
+App injecte {category} + {pattern}
+dans le prompt pattern du niveau
+    ↓
+Exercice généré ciblé sur ce pattern précis
+    ↓
+Bouton "Un autre exercice"
+→ même catégorie + même pattern
+
+
+Structure de l'écran
+
+┌─────────────────────────────────────┐
+│ ← Pattern Intermédiaire             │
+│ ─────────────────────────────────── │
+│ ┌─────────────┐ ┌─────────────────┐ │
+│ │ Dictionnaires│ │ .items()        │ │
+│ │ Listes      │ │ .values()       │ │
+│ │ Sets        │ │ .keys()         │ │
+│ │ Chaînes     │ │ .get()          │ │
+│ │ Tri         │ │ .setdefault()   │ │
+│ │ Comptage    │ │ defaultdict     │ │
+│ │ ...         │ │ Counter         │ │
+│ └─────────────┘ │ dict comprehension│
+│                 └─────────────────┘ │
+└─────────────────────────────────────┘
+
+
+
+Données des patterns par niveau
+Intermédiaire — 15 catégories :
+
+
+PATTERNS_INTERMEDIAIRE = {
+    "Dictionnaires": [
+        ".items()", ".values()", ".keys()",
+        ".get()", ".setdefault()",
+        "defaultdict", "Counter",
+        "dict comprehension"
+    ],
+    "Listes": [
+        "enumerate()", "zip()",
+        "list comprehension", "* unpacking",
+        ".append()/.extend()",
+        ".remove()/.pop()", "slice"
+    ],
+    "Sets": [
+        "set()", ".add()", "intersection",
+        "union", "difference",
+        "symmetric_difference", "in"
+    ],
+    "Chaînes": [
+        ".lower()/.upper()", ".strip()",
+        ".split()", ".join()",
+        ".startswith()/.endswith()",
+        ".isdigit()/.isalpha()", ".replace()",
+        "f-strings"
+    ],
+    "Tri et recherche": [
+        "sorted()", ".sort()",
+        "max()/min()", "lambda",
+        "key=len", ".count()", ".index()"
+    ],
+    "Comptage et statistiques": [
+        "sum()", "len()", "round()",
+        "zip_longest", "groupby"
+    ],
+    "Copie et référence": [
+        ".copy()", "deepcopy()",
+        "affectation ="
+    ],
+    "Conditionnels": [
+        "ternaire", "any()", "all()"
+    ],
+    "Déballage (unpacking)": [
+        "* pour listes",
+        "** pour dictionnaires",
+        "*args/**kwargs"
+    ],
+    "Namedtuple": [
+        "namedtuple()",
+        "accès par attribut", "_asdict()"
+    ],
+    "Fichiers": [
+        "with open()", ".read()/.readlines()",
+        ".write()/.writelines()"
+    ],
+    "Assertion et validation": [
+        "assert", "isinstance()"
+    ],
+    "Mathématiques": [
+        "abs()", "divmod()",
+        "enumerate(start=1)"
+    ],
+    "Itération avancée": [
+        "next()", "iter()", "reversed()"
+    ],
+    "Déballage variable ignorée": [
+        "for _, _, var in iterable"
+    ]
+}
+
+
+Intermédiaire ++ — 11 catégories :
+
+
+
+PATTERNS_INTERMEDIAIRE_PLUS = {
+    "Organisation du code": [
+        "if __name__ == '__main__'",
+        "création de modules",
+        "création de packages",
+        "imports relatifs", "__all__",
+        "alias d'import", "sys.path"
+    ],
+    "Entrée/Sortie et erreurs": [
+        "with (context manager)",
+        "try/except/else/finally",
+        "raise ValueError",
+        "exceptions personnalisées",
+        "CSV (reader/writer/DictReader)",
+        "JSON (json.load/json.dump)",
+        "pathlib.Path"
+    ],
+    "Fonctions avancées": [
+        "lambda", "map()", "filter()",
+        "reduce()", "*args", "**kwargs",
+        "closure", "partial()",
+        "décorateurs simples"
+    ],
+    "Structures avancées": [
+        "namedtuple", "defaultdict",
+        "Counter", "deque", "OrderedDict",
+        "sets avancés", "shallow/deep copy",
+        "structures imbriquées",
+        "zip() inversé", "enumerate(start=1)",
+        "any()/all()"
+    ],
+    "Itération avancée": [
+        "itérateurs", "générateurs (yield)",
+        "expressions génératrices",
+        "itertools.count()",
+        "itertools.cycle()",
+        "itertools.chain()",
+        "itertools.product()",
+        "itertools.permutations()",
+        "itertools.groupby()"
+    ],
+    "Programmation fonctionnelle": [
+        "fonctions pures", "immutabilité",
+        "composition de fonctions",
+        "functools.reduce()",
+        "functools.lru_cache", "récursion"
+    ],
+    "Gestion de contexte avancée": [
+        "contextlib", "contextmanager",
+        "closing()", "suppress()",
+        "context managers imbriqués"
+    ],
+    "Validation et assertions": [
+        "assert", "isinstance()",
+        "hasattr()", "callable()"
+    ],
+    "Chaînes avancées": [
+        "f-strings avancées", ".format()",
+        ".partition()/.rpartition()",
+        ".translate()", ".maketrans()"
+    ],
+    "Manipulation de dates": [
+        "datetime", "timedelta",
+        ".strftime()", ".strptime()"
+    ],
+    "Tests simples": [
+        "doctest", "unittest basique"
+    ]
+}
+
+
+
+POO — 8 catégories :
+
+
+PATTERNS_POO = {
+    "Base de la POO": [
+        "class", "__init__", "self",
+        "attributs d'instance",
+        "attributs de classe",
+        "méthodes d'instance",
+        "__str__", "__repr__", "__eq__",
+        "__lt__/__le__/__gt__/__ge__"
+    ],
+    "Héritage": [
+        "héritage simple", "super()",
+        "héritage multiple", "MRO",
+        "isinstance()/issubclass()",
+        "surcharge de méthode",
+        "extension de méthode"
+    ],
+    "Méthodes spéciales (dunder)": [
+        "__len__", "__getitem__/__setitem__",
+        "__iter__/__next__", "__call__",
+        "__enter__/__exit__",
+        "__add__/__sub__/__mul__",
+        "__bool__", "__hash__", "__slots__"
+    ],
+    "Contrôle d'accès": [
+        "encapsulation", "_attribut (protected)",
+        "__attribut (private)", "@property",
+        "@setter", "@deleter",
+        "getters/setters"
+    ],
+    "Méthodes de classe et statiques": [
+        "@classmethod", "@staticmethod",
+        "constructeurs alternatifs",
+        "variables de classe"
+    ],
+    "Patterns avancés": [
+        "composition", "agrégation",
+        "classe abstraite (ABC)",
+        "@abstractmethod", "polymorphisme",
+        "duck typing", "mixin",
+        "factory pattern", "singleton",
+        "__new__"
+    ],
+    "Gestion d'erreurs en POO": [
+        "exceptions personnalisées",
+        "raise dans les méthodes",
+        "context managers dans les classes"
+    ],
+    "Comparaison et représentation": [
+        "__eq__ et __hash__", "frozenset",
+        "dataclasses", "@dataclass(frozen=True)",
+        "__post_init__"
+    ]
+}
+
+
+Expert Architecture — 3 catégories :
+
+
+
+PATTERNS_EXPERT = {
+    "Création": [
+        "Singleton", "Factory Method",
+        "Abstract Factory", "Builder",
+        "Prototype"
+    ],
+    "Structure": [
+        "Adapter", "Bridge", "Composite",
+        "Decorator", "Facade",
+        "Flyweight", "Proxy"
+    ],
+    "Comportement": [
+        "Chain of Responsibility", "Command",
+        "Interpreter", "Iterator",
+        "Mediator", "Memento", "Observer",
+        "State", "Strategy",
+        "Template Method", "Visitor"
+    ]
+}
+```
+
+---
+
+**Injection dans les prompts**
+
+Les variables {category}, {pattern}, {last_topic} 
+et {language} sont injectées dynamiquement 
+par prompt_builder.py dans chaque prompt pattern.
+
+
+
+
+
+Dans prompt_builder.py, ajout de l'injection :
+
+
+
+def get_prompt(self, chapter, sublevel,
+               exercise_language, last_topic="",
+               category="", pattern=""):
+    path = f"prompts/{chapter}/{sublevel}.txt"
+    prompt = open(path).read()
+    prompt = prompt.replace("{language}", exercise_language)
+    prompt = prompt.replace("{last_topic}", last_topic)
+    prompt = prompt.replace("{category}", category)
+    prompt = prompt.replace("{pattern}", pattern)
+    return prompt
+
+
+
+Mise à jour session_state.py
+
+
+{
+    "last_exercise_topic": "listes",
+    "last_sublevel": "debutant",
+    "interface_language": "english",
+    "exercise_language": "english",
+    "theme": "dark",
+    "current_pattern_category": "",  # ← nouveau
+    "current_pattern": ""            # ← nouveau
+}
+```
+
+---
+
+**Nouveaux fichiers à créer**
+```
+screens/
+└── pattern_screen.py    # ← nouveau écran
+
+prompts/python/
+├── pattern_intermediaire.txt      # à mettre à jour
+├── pattern_intermediaire_plus.txt # à mettre à jour
+├── pattern_poo.txt                # à mettre à jour
+└── pattern_expert.txt             # à mettre à jour
+
+
+
+
+Mise à jour main.py
+
+
+elif route == "/pattern":
+    from screens.pattern_screen import build_pattern_screen
+    page.views.append(build_pattern_screen(page, session))
+
+
+
+Livrables
+Nouvel écran pattern_screen.py avec menu 2 colonnes
+Route /pattern ajoutée dans main.py
+Injection {category} et {pattern} dans prompt_builder.py
+Données des patterns intégrées pour les 4 niveaux
+session_state.py mis à jour
+Prompts pattern mis à jour avec {category} et {pattern}
+Navigation depuis sublevel → pattern → exercice
+
+
+
+Points de vigilance
+La colonne droite se met à jour dynamiquement selon la catégorie sélectionnée à gauche
+La catégorie et le pattern sont réinitialisés au changement de SubLevel
+Le bouton "Un autre exercice" génère un nouvel exercice sur le même pattern
+Le design suit exactement la charte Phase 5 (dark/light mode, couleurs, boutons)
+Les données des patterns sont stockées dans pattern_screen.py directement — pas besoin de fichiers JSON séparés
+La première catégorie est sélectionnée par défaut au chargement de l'écran — la colonne droite affiche immédiatement les patterns correspondants
 
 
 

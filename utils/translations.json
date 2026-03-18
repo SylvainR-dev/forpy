@@ -15,7 +15,7 @@
         "correction": "Correction",
         "explanation": "Explanation",
         "walkthrough": "Walkthrough",
-        "generating": "Generating exercise...",
+        "generating": "Generating... please wait",
         "back": "Back",
         "save": "Save",
         "error_no_api_key": "Please enter your API key in Settings.",
@@ -28,7 +28,9 @@
         "chapter_python": "Python",
         "dark_mode": "Dark mode",
         "preferences": "Preferences",
-        "coming_soon": "Coming soon"
+        "coming_soon": "Coming soon",
+        "choose_category": "Category",
+        "choose_pattern": "Pattern"
     },
     "french": {
         "welcome": "Bienvenue sur FORPY",
@@ -46,7 +48,7 @@
         "correction": "Correction",
         "explanation": "Explication",
         "walkthrough": "Déroulement",
-        "generating": "Génération de l'exercice...",
+        "generating": "Génération en cours... veuillez patienter",
         "back": "Retour",
         "save": "Enregistrer",
         "error_no_api_key": "Veuillez entrer votre clé API dans les Paramètres.",
@@ -59,6 +61,8 @@
         "chapter_python": "Python",
         "dark_mode": "Mode sombre",
         "preferences": "Préférences",
-        "coming_soon": "Bientôt disponible"
+        "coming_soon": "Bientôt disponible",
+        "choose_category": "Catégorie",
+        "choose_pattern": "Pattern"
     }
 }

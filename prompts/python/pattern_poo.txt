@@ -1,23 +1,45 @@
-You are a Python programming instructor. Your student knows OOP well and is learning OOP design patterns.
+PROMPT — Pattern POO Python
 
-Generate a unique mini-exercise in {language} implementing an OOP design pattern.
-{last_topic}
-OOP Patterns for this level:
-- Factory Method pattern
-- Abstract Factory
-- Builder pattern
-- Prototype (copy/deepcopy based)
-- Decorator pattern (class-based)
-- Facade pattern
-- State pattern
-- Mediator (basic)
+Le contexte
+* Agis comme un mentor Python spécialisé en programmation orientée objet.
+* Génère 1 mini-exercice ciblé sur le pattern suivant :
+  - Catégorie : {category}
+  - Pattern : {pattern}
 
-Implement a small, self-contained example (20-40 lines). The problem should clearly motivate the pattern.
+Les consignes pour chaque exercice :
+1) Un énoncé clair et simple
+* L'exercice doit porter UNIQUEMENT sur le pattern {pattern} de la catégorie {category} en POO.
+* Sois court et concret avec une situation réelle métier si possible (ex: gestion d'employés, catalogue produits, système de commandes...).
+* Fournis le squelette de classe si nécessaire pour que l'élève comprenne le contexte.
+* Propose le résultat attendu.
 
-Return ONLY a valid JSON object — no markdown, no extra text, no comments:
-{
-    "enonce": "Describe the scenario and which pattern to implement",
-    "correction": "A clean Python class-based implementation of the pattern",
-    "explication": "Line-by-line explanation of the class structure and pattern mechanics",
-    "deroulement": "A conversational paragraph on when this pattern shines and its trade-offs"
-}
+2) Une correction de l'exercice avec du code Python.
+* Sous forme de code prêt à être copié.
+* Le pattern {pattern} doit être clairement implémenté et visible dans la correction.
+* Le code doit respecter les bonnes pratiques POO.
+
+3) Explication ligne par ligne.
+* Explication claire, ligne par ligne, sans jargon excessif.
+* Explique le rôle de chaque élément POO utilisé (classe, méthode, attribut...).
+* Fais en sorte que chaque exercice soit complet et se termine par l'affichage du résultat.
+
+4) Description du déroulement
+* Écrire un seul paragraphe fluide (pas de liste, pas de tirets, pas de découpage ligne par ligne).
+* Adopter un ton oral posé, naturel, comme si tu expliquais le code à voix haute.
+* Rester clair, pragmatique et professionnel.
+* Nommer clairement le pattern {pattern} dans l'explication et montrer pourquoi il est fondamental en POO.
+* Décrire le déroulement dans l'ordre d'exécution, de façon linéaire et logique.
+* Terminer par une petite phrase qui résume l'utilité du pattern POO (ex. : "En gros {pattern} permet de...").
+* Garder une longueur raisonnable : environ 5 à 9 lignes.
+
+Les contraintes :
+* Le pattern {pattern} doit être le focus central de l'exercice
+* Code orienté objet propre et lisible
+* Pas de frameworks externes
+
+Objectif :
+Maîtriser le pattern {pattern} de la catégorie {category} en POO Python dans des situations réelles.
+
+Ne génère pas un exercice similaire au précédent qui portait sur : {last_topic}
+Réponds uniquement en {language}.
+

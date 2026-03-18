@@ -5,6 +5,8 @@ Loads the .txt prompt file matching chapter + sublevel,
 then injects:
     {language}     — language of the exercise
     {last_topic}   — last generated topic (anti-repetition instruction)
+    {category}     — pattern category (pattern sublevels only)
+    {pattern}      — specific pattern (pattern sublevels only)
 """
 
 import os
@@ -19,6 +21,8 @@ class PromptBuilder:
         sublevel: str,
         exercise_language: str,
         last_topic: str = "",
+        category: str = "",
+        pattern: str = "",
     ) -> str:
         path = os.path.join(PROMPTS_DIR, chapter, f"{sublevel}.txt")
 
@@ -29,6 +33,8 @@ class PromptBuilder:
             prompt = f.read()
 
         prompt = prompt.replace("{language}", exercise_language)
+        prompt = prompt.replace("{category}", category)
+        prompt = prompt.replace("{pattern}", pattern)
 
         if last_topic:
             anti_repeat = (
