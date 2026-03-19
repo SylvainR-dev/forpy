@@ -35,8 +35,8 @@ def build_home_screen(page: ft.Page, session: SessionState) -> ft.View:
                     ft.Text(
                         "For Python — Learn by doing",
                         size=27,
-                        color="#ffffff",
-                        opacity=0.7,
+                        color=c["text"],
+                        font_family="Nunito",
                         text_align=ft.TextAlign.CENTER,
                     ),
                     ft.Container(height=32),

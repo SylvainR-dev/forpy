@@ -35,7 +35,8 @@
       "Bash(python -m pytest tests/ -v)",
       "Bash(pip show:*)",
       "Bash(python -c \"import flet; print\\(flet.VERSION\\)\")",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(ls:*)"
     ]
   }
 }

@@ -30,7 +30,7 @@ def build_exercise_screen(page: ft.Page, session: SessionState) -> ft.View:
     # --- Body text widgets (updatable refs) ---
     enonce_text = ft.Text("", selectable=True, color=c["text"], size=14)
     correction_text = ft.Text(
-        "", selectable=True, color="#d4d4d4", font_family="monospace", size=13
+        "", selectable=True, color="#d4d4d4", font_family="monospace", size=14
     )
     explication_text = ft.Text("", selectable=True, color=c["text"], size=14)
     deroulement_text = ft.Text("", selectable=True, color=c["text"], size=14)

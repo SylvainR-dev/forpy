@@ -9,12 +9,15 @@ def build_sublevel_screen(page: ft.Page, session: SessionState) -> ft.View:
     c = get_colors(session.theme)
     sublevels = getattr(session, "_current_sublevels", [])
 
+    level_title = t.get(getattr(session, "_current_level_key", ""), session.current_level)
+
     items: list[ft.Control] = []
     for sub in sublevels:
         btn = ft.ElevatedButton(
-            content=sub["label"],
+            content=t.get(sub.get("label_key", ""), sub["label"]),
             bgcolor=c["btn_bg"],
             color=c["btn_text"],
+            height=48,
             on_click=lambda _, s=sub: _select_sublevel(page, session, s),
             style=ft.ButtonStyle(
                 shape=ft.RoundedRectangleBorder(radius=8),
@@ -40,7 +43,7 @@ def build_sublevel_screen(page: ft.Page, session: SessionState) -> ft.View:
         bgcolor=c["bg"],
         controls=[
             ft.AppBar(
-                title=ft.Text(session.current_level, color=c["text"]),
+                title=ft.Text(level_title, color=c["text"]),
                 bgcolor=c["bg"],
                 leading=ft.IconButton(
                     ft.Icons.ARROW_BACK,
@@ -73,7 +76,8 @@ def build_sublevel_screen(page: ft.Page, session: SessionState) -> ft.View:
 
 def _select_sublevel(page: ft.Page, session: SessionState, sublevel: dict) -> None:
     session.set_sublevel(session.current_level, sublevel["key"])
-    session._current_sublevel_label = sublevel["label"]
+    t = get_translations(session.interface_language)
+    session._current_sublevel_label = t.get(sublevel.get("label_key", ""), sublevel["label"])
     if sublevel["key"].startswith("pattern_"):
         page.go("/pattern")
     else:

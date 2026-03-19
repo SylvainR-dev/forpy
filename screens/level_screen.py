@@ -7,57 +7,69 @@ from utils.theme import get_colors
 LEVELS = [
     {
         "name": "Noob",
+        "name_key": "level_noob",
+        "image": "logique_noob.png",
         "sublevels": [
-            {"label": "Noob", "key": "noob"},
+            {"label": "Noob", "label_key": "sub_noob", "key": "noob"},
         ],
     },
     {
         "name": "Débutant",
+        "name_key": "level_debutant",
+        "image": "logique_debutant.png",
         "sublevels": [
-            {"label": "Débutant", "key": "debutant"},
-            {"label": "Débutant ++", "key": "debutant_plus"},
-            {"label": "DEBUG Débutant", "key": "debug_debutant"},
+            {"label": "Débutant", "label_key": "sub_debutant", "key": "debutant"},
+            {"label": "Débutant ++", "label_key": "sub_debutant_plus", "key": "debutant_plus"},
+            {"label": "DEBUG Débutant", "label_key": "sub_debug_debutant", "key": "debug_debutant"},
         ],
     },
     {
         "name": "Intermédiaire",
+        "name_key": "level_intermediaire",
+        "image": "logique_intermediaire.png",
         "sublevels": [
-            {"label": "Intermédiaire", "key": "intermediaire"},
-            {"label": "Intermédiaire Avancé", "key": "intermediaire_avance"},
-            {"label": "DEBUG Intermédiaire", "key": "debug_intermediaire"},
-            {"label": "Pythonique Intermédiaire", "key": "pythonique_intermediaire"},
-            {"label": "Pattern", "key": "pattern_intermediaire"},
+            {"label": "Intermédiaire", "label_key": "sub_intermediaire", "key": "intermediaire"},
+            {"label": "Intermédiaire Avancé", "label_key": "sub_intermediaire_avance", "key": "intermediaire_avance"},
+            {"label": "DEBUG Intermédiaire", "label_key": "sub_debug_intermediaire", "key": "debug_intermediaire"},
+            {"label": "Pythonique Intermédiaire", "label_key": "sub_pythonique_intermediaire", "key": "pythonique_intermediaire"},
+            {"label": "Pattern", "label_key": "sub_pattern", "key": "pattern_intermediaire"},
         ],
     },
     {
         "name": "Intermédiaire ++",
+        "name_key": "level_intermediaire_plus",
+        "image": "logique_intermediaire_plus.png",
         "sublevels": [
-            {"label": "Fonctions avancées", "key": "fonctions_avancees"},
-            {"label": "Manipulation structure", "key": "manipulation_structure"},
-            {"label": "Entrée/Sortie et erreurs", "key": "entree_sortie_erreurs"},
-            {"label": "Organisation du code", "key": "organisation_code"},
-            {"label": "DEBUG Intermédiaire ++", "key": "debug_intermediaire_plus"},
-            {"label": "Pythonique Intermédiaire ++", "key": "pythonique_intermediaire_plus"},
-            {"label": "Pattern", "key": "pattern_intermediaire_plus"},
+            {"label": "Fonctions avancées", "label_key": "sub_fonctions_avancees", "key": "fonctions_avancees"},
+            {"label": "Manipulation structure", "label_key": "sub_manipulation_structure", "key": "manipulation_structure"},
+            {"label": "Entrée/Sortie et erreurs", "label_key": "sub_entree_sortie_erreurs", "key": "entree_sortie_erreurs"},
+            {"label": "Organisation du code", "label_key": "sub_organisation_code", "key": "organisation_code"},
+            {"label": "DEBUG Intermédiaire ++", "label_key": "sub_debug_intermediaire_plus", "key": "debug_intermediaire_plus"},
+            {"label": "Pythonique Intermédiaire ++", "label_key": "sub_pythonique_intermediaire_plus", "key": "pythonique_intermediaire_plus"},
+            {"label": "Pattern", "label_key": "sub_pattern", "key": "pattern_intermediaire_plus"},
         ],
     },
     {
         "name": "POO",
+        "name_key": "level_poo",
+        "image": "logique_poo.png",
         "sublevels": [
-            {"label": "Intro POO", "key": "intro_poo"},
-            {"label": "POO ++", "key": "poo_plus"},
-            {"label": "DEBUG POO", "key": "debug_poo"},
-            {"label": "POO Pythonique", "key": "poo_pythonique"},
-            {"label": "Pattern", "key": "pattern_poo"},
+            {"label": "Intro POO", "label_key": "sub_intro_poo", "key": "intro_poo"},
+            {"label": "POO ++", "label_key": "sub_poo_plus", "key": "poo_plus"},
+            {"label": "DEBUG POO", "label_key": "sub_debug_poo", "key": "debug_poo"},
+            {"label": "POO Pythonique", "label_key": "sub_poo_pythonique", "key": "poo_pythonique"},
+            {"label": "Pattern", "label_key": "sub_pattern", "key": "pattern_poo"},
         ],
     },
     {
         "name": "Expert Architecture",
+        "name_key": "level_expert",
+        "image": "logique_expert.png",
         "sublevels": [
-            {"label": "Architecture", "key": "architecture"},
-            {"label": "DEBUG Architecture", "key": "debug_architecture"},
-            {"label": "Architecture Pythonique", "key": "architecture_pythonique"},
-            {"label": "Pattern", "key": "pattern_expert"},
+            {"label": "Architecture", "label_key": "sub_architecture", "key": "architecture"},
+            {"label": "DEBUG Architecture", "label_key": "sub_debug_architecture", "key": "debug_architecture"},
+            {"label": "Architecture Pythonique", "label_key": "sub_architecture_pythonique", "key": "architecture_pythonique"},
+            {"label": "Pattern", "label_key": "sub_pattern", "key": "pattern_expert"},
         ],
     },
 ]
@@ -69,22 +81,21 @@ def build_level_screen(page: ft.Page, session: SessionState) -> ft.View:
 
     items: list[ft.Control] = []
     for level in LEVELS:
-        n = len(level["sublevels"])
-        badge = ft.Container(
-            content=ft.Text(
-                str(n),
-                size=11,
-                color="#ffffff",
-                weight=ft.FontWeight.BOLD,
+        logic_btn = ft.ElevatedButton(
+            content=t["voir_la_logique"],
+            bgcolor="#4a9eff",
+            color="#ffffff",
+            height=48,
+            on_click=lambda _, lvl=level: _open_logic(page, session, lvl["image"]),
+            style=ft.ButtonStyle(
+                shape=ft.RoundedRectangleBorder(radius=8),
             ),
-            bgcolor=c["accent"],
-            border_radius=10,
-            padding=ft.padding.symmetric(horizontal=8, vertical=3),
         )
         btn = ft.ElevatedButton(
-            content=level["name"],
+            content=t.get(level["name_key"], level["name"]),
             bgcolor=c["btn_bg"],
             color=c["btn_text"],
+            height=48,
             on_click=lambda _, lvl=level: _select_level(page, session, lvl),
             style=ft.ButtonStyle(
                 shape=ft.RoundedRectangleBorder(radius=8),
@@ -92,7 +103,7 @@ def build_level_screen(page: ft.Page, session: SessionState) -> ft.View:
         )
         row = ft.Container(
             content=ft.Row(
-                controls=[btn, badge],
+                controls=[btn, logic_btn],
                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                 vertical_alignment=ft.CrossAxisAlignment.CENTER,
             ),
@@ -142,7 +153,13 @@ def build_level_screen(page: ft.Page, session: SessionState) -> ft.View:
     )
 
 
+def _open_logic(page: ft.Page, session: SessionState, image_name: str) -> None:
+    session.current_logic_image = image_name
+    page.go("/logic")
+
+
 def _select_level(page: ft.Page, session: SessionState, level: dict) -> None:
     session.current_level = level["name"]
+    session._current_level_key = level["name_key"]
     session._current_sublevels = level["sublevels"]
     page.go("/sublevel")

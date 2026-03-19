@@ -234,6 +234,125 @@ class GeminiProvider(AIProvider):
 
 
 # ---------------------------------------------------------------------------
+# Grok (xAI) — OpenAI-compatible
+# ---------------------------------------------------------------------------
+
+class GrokProvider(AIProvider):
+    MODEL = "grok-3"
+    BASE_URL = "https://api.x.ai/v1"
+
+    async def _call_once(self, prompt: str, api_key: str) -> dict:
+        import openai
+
+        client = openai.AsyncOpenAI(api_key=api_key, base_url=self.BASE_URL)
+        try:
+            response = await client.chat.completions.create(
+                model=self.MODEL,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=1024,
+            )
+        except openai.AuthenticationError:
+            api_logger.warning("[GrokProvider] Invalid API key")
+            raise ValueError("invalid_key")
+        except openai.RateLimitError:
+            api_logger.warning("[GrokProvider] Rate limit / quota exceeded")
+            raise ValueError("quota")
+        except openai.APITimeoutError:
+            api_logger.warning("[GrokProvider] SDK-level timeout")
+            raise ValueError("timeout")
+        except openai.APIConnectionError as exc:
+            api_logger.error("[GrokProvider] Connection error: %s", exc)
+            raise ValueError("timeout")
+        except openai.APIStatusError as exc:
+            api_logger.error(
+                "[GrokProvider] API error %d: %s", exc.status_code, exc.message
+            )
+            raise
+
+        return _parse_json(response.choices[0].message.content)
+
+
+# ---------------------------------------------------------------------------
+# LLaMA (Meta) — via Ollama (local) or any OpenAI-compatible endpoint
+# ---------------------------------------------------------------------------
+
+class LlamaProvider(AIProvider):
+    MODEL = "llama3.2"
+    BASE_URL = "http://localhost:11434/v1"
+
+    async def _call_once(self, prompt: str, api_key: str) -> dict:
+        import openai
+
+        # Ollama accepts any non-empty string as api_key
+        effective_key = api_key if api_key else "ollama"
+        client = openai.AsyncOpenAI(api_key=effective_key, base_url=self.BASE_URL)
+        try:
+            response = await client.chat.completions.create(
+                model=self.MODEL,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=1024,
+            )
+        except openai.AuthenticationError:
+            api_logger.warning("[LlamaProvider] Invalid API key")
+            raise ValueError("invalid_key")
+        except openai.RateLimitError:
+            api_logger.warning("[LlamaProvider] Rate limit / quota exceeded")
+            raise ValueError("quota")
+        except openai.APITimeoutError:
+            api_logger.warning("[LlamaProvider] SDK-level timeout")
+            raise ValueError("timeout")
+        except openai.APIConnectionError as exc:
+            api_logger.error("[LlamaProvider] Connection error: %s", exc)
+            raise ValueError("timeout")
+        except openai.APIStatusError as exc:
+            api_logger.error(
+                "[LlamaProvider] API error %d: %s", exc.status_code, exc.message
+            )
+            raise
+
+        return _parse_json(response.choices[0].message.content)
+
+
+# ---------------------------------------------------------------------------
+# Mistral — OpenAI-compatible
+# ---------------------------------------------------------------------------
+
+class MistralProvider(AIProvider):
+    MODEL = "mistral-small-latest"
+    BASE_URL = "https://api.mistral.ai/v1"
+
+    async def _call_once(self, prompt: str, api_key: str) -> dict:
+        import openai
+
+        client = openai.AsyncOpenAI(api_key=api_key, base_url=self.BASE_URL)
+        try:
+            response = await client.chat.completions.create(
+                model=self.MODEL,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=1024,
+            )
+        except openai.AuthenticationError:
+            api_logger.warning("[MistralProvider] Invalid API key")
+            raise ValueError("invalid_key")
+        except openai.RateLimitError:
+            api_logger.warning("[MistralProvider] Rate limit / quota exceeded")
+            raise ValueError("quota")
+        except openai.APITimeoutError:
+            api_logger.warning("[MistralProvider] SDK-level timeout")
+            raise ValueError("timeout")
+        except openai.APIConnectionError as exc:
+            api_logger.error("[MistralProvider] Connection error: %s", exc)
+            raise ValueError("timeout")
+        except openai.APIStatusError as exc:
+            api_logger.error(
+                "[MistralProvider] API error %d: %s", exc.status_code, exc.message
+            )
+            raise
+
+        return _parse_json(response.choices[0].message.content)
+
+
+# ---------------------------------------------------------------------------
 # Factory
 # ---------------------------------------------------------------------------
 
@@ -241,6 +360,9 @@ _PROVIDERS: dict[str, type[AIProvider]] = {
     "anthropic": ClaudeProvider,
     "openai": OpenAIProvider,
     "gemini": GeminiProvider,
+    "grok": GrokProvider,
+    "llama": LlamaProvider,
+    "mistral": MistralProvider,
 }
 
 

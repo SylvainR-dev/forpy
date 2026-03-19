@@ -3,7 +3,16 @@ from utils.session_state import SessionState
 from utils.translations import get_translations
 from utils.theme import get_colors, apply_theme
 
-PROVIDERS = ["anthropic", "openai", "gemini"]
+PROVIDERS = ["anthropic", "openai", "gemini", "grok", "llama", "mistral"]
+
+_PROVIDER_LABELS = {
+    "anthropic": "Claude",
+    "openai": "OpenAI",
+    "gemini": "Gemini",
+    "grok": "Grok",
+    "llama": "LLaMA",
+    "mistral": "Mistral",
+}
 LANGUAGES = ["english", "french"]
 
 
@@ -18,7 +27,7 @@ def build_settings_screen(page: ft.Page, session: SessionState) -> ft.View:
         is_active = p == session.provider
         return ft.Container(
             content=ft.Text(
-                p.capitalize(),
+                _PROVIDER_LABELS.get(p, p.capitalize()),
                 color=c["btn_text"],
                 weight=ft.FontWeight.W_500,
                 text_align=ft.TextAlign.CENTER,
@@ -33,7 +42,7 @@ def build_settings_screen(page: ft.Page, session: SessionState) -> ft.View:
         )
 
     provider_btns = [_make_provider_btn(p) for p in PROVIDERS]
-    provider_row = ft.Row(controls=provider_btns, spacing=8)
+    provider_row = ft.Row(controls=provider_btns, spacing=8, wrap=True)
 
     def _select_provider(prov: str) -> None:
         selected_provider[0] = prov
@@ -52,7 +61,6 @@ def build_settings_screen(page: ft.Page, session: SessionState) -> ft.View:
         label_style=ft.TextStyle(color=c["text"]),
         color=c["text"],
         bgcolor=c["card_bg"],
-        width=340,
     )
 
     # --- Language dropdowns ---
@@ -64,7 +72,6 @@ def build_settings_screen(page: ft.Page, session: SessionState) -> ft.View:
         focused_border_color=c["accent"],
         color=c["text"],
         label_style=ft.TextStyle(color=c["text"]),
-        width=280,
     )
 
     exercise_lang_dropdown = ft.Dropdown(
@@ -75,7 +82,6 @@ def build_settings_screen(page: ft.Page, session: SessionState) -> ft.View:
         focused_border_color=c["accent"],
         color=c["text"],
         label_style=ft.TextStyle(color=c["text"]),
-        width=280,
     )
 
     # --- Dark mode toggle ---
@@ -147,35 +153,39 @@ def build_settings_screen(page: ft.Page, session: SessionState) -> ft.View:
                     icon_color=c["accent"],
                 ),
             ),
-            ft.Column(
-                controls=[
-                    ft.Text(
-                        t["provider"],
-                        size=14,
-                        weight=ft.FontWeight.W_500,
-                        color=c["text"],
-                    ),
-                    provider_row,
-                    ft.Divider(height=1, color=c["border"], thickness=1),
-                    api_key_field,
-                    ft.Divider(height=1, color=c["border"], thickness=1),
-                    preferences_card,
-                    ft.Container(height=8),
-                    ft.ElevatedButton(
-                        content=t["save"],
-                        on_click=save,
-                        width=300,
-                        height=50,
-                        bgcolor=c["btn_bg"],
-                        color=c["btn_text"],
-                        style=ft.ButtonStyle(
-                            shape=ft.RoundedRectangleBorder(radius=10),
+            ft.Container(
+                content=ft.Column(
+                    controls=[
+                        ft.Text(
+                            t["provider"],
+                            size=14,
+                            weight=ft.FontWeight.W_500,
+                            color=c["text"],
                         ),
-                    ),
-                    feedback,
-                ],
-                horizontal_alignment=ft.CrossAxisAlignment.START,
-                spacing=16,
+                        provider_row,
+                        ft.Divider(height=1, color=c["border"], thickness=1),
+                        api_key_field,
+                        ft.Divider(height=1, color=c["border"], thickness=1),
+                        preferences_card,
+                        ft.Container(height=8),
+                        ft.ElevatedButton(
+                            content=t["save"],
+                            on_click=save,
+                            height=50,
+                            expand=True,
+                            bgcolor=c["btn_bg"],
+                            color=c["btn_text"],
+                            style=ft.ButtonStyle(
+                                shape=ft.RoundedRectangleBorder(radius=10),
+                            ),
+                        ),
+                        feedback,
+                    ],
+                    horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
+                    spacing=16,
+                ),
+                padding=ft.padding.symmetric(horizontal=16),
+                expand=True,
             ),
         ],
         scroll=ft.ScrollMode.AUTO,

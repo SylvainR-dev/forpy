@@ -1,7 +1,22 @@
 import json
 import os
+import sys
 
-SETTINGS_PATH = "settings.json"
+
+def _get_settings_path() -> str:
+    if sys.platform == "android":
+        # Android : répertoire de données de l'app (accessible en permanence)
+        base = os.path.expanduser("~")
+    else:
+        # Windows, Linux, macOS : ~/.forpy/
+        base = os.path.expanduser("~")
+
+    settings_dir = os.path.join(base, ".forpy")
+    os.makedirs(settings_dir, exist_ok=True)
+    return os.path.join(settings_dir, "settings.json")
+
+
+SETTINGS_PATH = _get_settings_path()
 
 DEFAULT_SETTINGS = {
     "api_key": "",
@@ -34,6 +49,7 @@ class SessionState:
         self.last_exercise_topic: str = ""
         self.current_pattern_category: str = ""
         self.current_pattern: str = ""
+        self.current_logic_image: str = ""
 
         # Persistent settings
         self._settings: dict = self._load_settings()

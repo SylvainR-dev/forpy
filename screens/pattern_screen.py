@@ -49,13 +49,13 @@ PATTERNS_INTERMEDIAIRE = {
         "ternaire", "any()", "all()",
     ],
     "Déballage (unpacking)": [
-        "* pour listes",
-        "** pour dictionnaires",
+        "* for lists",
+        "** for dicts",
         "*args/**kwargs",
     ],
     "Namedtuple": [
         "namedtuple()",
-        "accès par attribut", "_asdict()",
+        "attribute access", "_asdict()",
     ],
     "Fichiers": [
         "with open()", ".read()/.readlines()",
@@ -79,16 +79,16 @@ PATTERNS_INTERMEDIAIRE = {
 PATTERNS_INTERMEDIAIRE_PLUS = {
     "Organisation du code": [
         "if __name__ == '__main__'",
-        "création de modules",
-        "création de packages",
-        "imports relatifs", "__all__",
-        "alias d'import", "sys.path",
+        "module creation",
+        "package creation",
+        "relative imports", "__all__",
+        "import alias", "sys.path",
     ],
     "Entrée/Sortie et erreurs": [
         "with (context manager)",
         "try/except/else/finally",
         "raise ValueError",
-        "exceptions personnalisées",
+        "custom exceptions",
         "CSV (reader/writer/DictReader)",
         "JSON (json.load/json.dump)",
         "pathlib.Path",
@@ -97,19 +97,19 @@ PATTERNS_INTERMEDIAIRE_PLUS = {
         "lambda", "map()", "filter()",
         "reduce()", "*args", "**kwargs",
         "closure", "partial()",
-        "décorateurs simples",
+        "simple decorators",
     ],
     "Structures avancées": [
         "namedtuple", "defaultdict",
         "Counter", "deque", "OrderedDict",
-        "sets avancés", "shallow/deep copy",
-        "structures imbriquées",
-        "zip() inversé", "enumerate(start=1)",
+        "advanced sets", "shallow/deep copy",
+        "nested structures",
+        "zip() reversed", "enumerate(start=1)",
         "any()/all()",
     ],
     "Itération avancée": [
-        "itérateurs", "générateurs (yield)",
-        "expressions génératrices",
+        "iterators", "generators (yield)",
+        "generator expressions",
         "itertools.count()",
         "itertools.cycle()",
         "itertools.chain()",
@@ -118,22 +118,22 @@ PATTERNS_INTERMEDIAIRE_PLUS = {
         "itertools.groupby()",
     ],
     "Programmation fonctionnelle": [
-        "fonctions pures", "immutabilité",
-        "composition de fonctions",
+        "pure functions", "immutability",
+        "function composition",
         "functools.reduce()",
-        "functools.lru_cache", "récursion",
+        "functools.lru_cache", "recursion",
     ],
     "Gestion de contexte avancée": [
         "contextlib", "contextmanager",
         "closing()", "suppress()",
-        "context managers imbriqués",
+        "nested context managers",
     ],
     "Validation et assertions": [
         "assert", "isinstance()",
         "hasattr()", "callable()",
     ],
     "Chaînes avancées": [
-        "f-strings avancées", ".format()",
+        "advanced f-strings", ".format()",
         ".partition()/.rpartition()",
         ".translate()", ".maketrans()",
     ],
@@ -142,25 +142,25 @@ PATTERNS_INTERMEDIAIRE_PLUS = {
         ".strftime()", ".strptime()",
     ],
     "Tests simples": [
-        "doctest", "unittest basique",
+        "doctest", "basic unittest",
     ],
 }
 
 PATTERNS_POO = {
     "Base de la POO": [
         "class", "__init__", "self",
-        "attributs d'instance",
-        "attributs de classe",
-        "méthodes d'instance",
+        "instance attributes",
+        "class attributes",
+        "instance methods",
         "__str__", "__repr__", "__eq__",
         "__lt__/__le__/__gt__/__ge__",
     ],
     "Héritage": [
-        "héritage simple", "super()",
-        "héritage multiple", "MRO",
+        "single inheritance", "super()",
+        "multiple inheritance", "MRO",
         "isinstance()/issubclass()",
-        "surcharge de méthode",
-        "extension de méthode",
+        "method overriding",
+        "method extension",
     ],
     "Méthodes spéciales (dunder)": [
         "__len__", "__getitem__/__setitem__",
@@ -177,21 +177,21 @@ PATTERNS_POO = {
     ],
     "Méthodes de classe et statiques": [
         "@classmethod", "@staticmethod",
-        "constructeurs alternatifs",
-        "variables de classe",
+        "alternative constructors",
+        "class variables",
     ],
     "Patterns avancés": [
-        "composition", "agrégation",
-        "classe abstraite (ABC)",
-        "@abstractmethod", "polymorphisme",
+        "composition", "aggregation",
+        "abstract class (ABC)",
+        "@abstractmethod", "polymorphism",
         "duck typing", "mixin",
         "factory pattern", "singleton",
         "__new__",
     ],
     "Gestion d'erreurs en POO": [
-        "exceptions personnalisées",
-        "raise dans les méthodes",
-        "context managers dans les classes",
+        "custom exceptions",
+        "raise in methods",
+        "context managers in classes",
     ],
     "Comparaison et représentation": [
         "__eq__ et __hash__", "frozenset",
@@ -220,6 +220,50 @@ PATTERNS_EXPERT = {
     ],
 }
 
+# ---------------------------------------------------------------------------
+# Mapping: internal French key → translation key
+# ---------------------------------------------------------------------------
+
+CATEGORY_TRANSLATION_KEYS = {
+    "Dictionnaires": "cat_dictionnaires",
+    "Listes": "cat_listes",
+    "Sets": "cat_sets",
+    "Chaînes": "cat_chaines",
+    "Tri et recherche": "cat_tri_recherche",
+    "Comptage et statistiques": "cat_comptage_statistiques",
+    "Copie et référence": "cat_copie_reference",
+    "Conditionnels": "cat_conditionnels",
+    "Déballage (unpacking)": "cat_deballage",
+    "Namedtuple": "cat_namedtuple",
+    "Fichiers": "cat_fichiers",
+    "Assertion et validation": "cat_assertion_validation",
+    "Mathématiques": "cat_mathematiques",
+    "Itération avancée": "cat_iteration_avancee",
+    "Déballage variable ignorée": "cat_deballage_variable_ignoree",
+    "Organisation du code": "cat_organisation_code",
+    "Entrée/Sortie et erreurs": "cat_entree_sortie_erreurs",
+    "Fonctions avancées": "cat_fonctions_avancees",
+    "Structures avancées": "cat_structures_avancees",
+    "Programmation fonctionnelle": "cat_programmation_fonctionnelle",
+    "Gestion de contexte avancée": "cat_gestion_contexte_avancee",
+    "Validation et assertions": "cat_validation_assertions",
+    "Chaînes avancées": "cat_chaines_avancees",
+    "Manipulation de dates": "cat_manipulation_dates",
+    "Tests simples": "cat_tests_simples",
+    "Base de la POO": "cat_base_poo",
+    "Héritage": "cat_heritage",
+    "Méthodes spéciales (dunder)": "cat_methodes_speciales",
+    "Contrôle d'accès": "cat_controle_acces",
+    "Méthodes de classe et statiques": "cat_methodes_classe_statiques",
+    "Patterns avancés": "cat_patterns_avances",
+    "Gestion d'erreurs en POO": "cat_gestion_erreurs_poo",
+    "Comparaison et représentation": "cat_comparaison_representation",
+    "Création": "cat_creation",
+    "Structure": "cat_structure",
+    "Comportement": "cat_comportement",
+}
+
+
 PATTERNS_BY_SUBLEVEL = {
     "pattern_intermediaire": PATTERNS_INTERMEDIAIRE,
     "pattern_intermediaire_plus": PATTERNS_INTERMEDIAIRE_PLUS,
@@ -242,6 +286,10 @@ def build_pattern_screen(page: ft.Page, session: SessionState) -> ft.View:
 
     selected = {"category": categories[0] if categories else ""}
 
+    def _cat_label(cat: str) -> str:
+        key = CATEGORY_TRANSLATION_KEYS.get(cat)
+        return t.get(key, cat) if key else cat
+
     # --- Right column: pattern buttons ---
     patterns_col = ft.Column(spacing=6, scroll=ft.ScrollMode.AUTO, expand=True)
 
@@ -256,6 +304,7 @@ def build_pattern_screen(page: ft.Page, session: SessionState) -> ft.View:
                     content=p,
                     bgcolor=c["btn_bg"],
                     color=c["btn_text"],
+                    height=44,
                     on_click=lambda _, cat=category, pat=p: _select_pattern(cat, pat),
                     style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=8)),
                 )
@@ -283,9 +332,10 @@ def build_pattern_screen(page: ft.Page, session: SessionState) -> ft.View:
     for cat in categories:
         is_first = cat == selected["category"]
         btn = ft.ElevatedButton(
-            content=cat,
+            content=_cat_label(cat),
             bgcolor=c["accent"] if is_first else c["btn_bg"],
             color="#ffffff" if is_first else c["btn_text"],
+            height=44,
             on_click=lambda _, cat=cat: _select_category(cat),
             style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=8)),
         )
@@ -318,7 +368,7 @@ def build_pattern_screen(page: ft.Page, session: SessionState) -> ft.View:
                                 controls=[
                                     ft.Text(
                                         t["choose_category"],
-                                        size=12,
+                                        size=14,
                                         weight=ft.FontWeight.BOLD,
                                         color=c["accent"],
                                     ),
@@ -328,7 +378,7 @@ def build_pattern_screen(page: ft.Page, session: SessionState) -> ft.View:
                                 spacing=8,
                                 scroll=ft.ScrollMode.AUTO,
                             ),
-                            width=170,
+                            width=130,
                             bgcolor=c["card_bg"],
                             border_radius=10,
                             padding=10,
@@ -339,7 +389,7 @@ def build_pattern_screen(page: ft.Page, session: SessionState) -> ft.View:
                                 controls=[
                                     ft.Text(
                                         t["choose_pattern"],
-                                        size=12,
+                                        size=14,
                                         weight=ft.FontWeight.BOLD,
                                         color=c["accent"],
                                     ),

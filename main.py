@@ -8,6 +8,9 @@ session = SessionState()
 def main(page: ft.Page):
     page.title = "FORPY"
     page.padding = 10
+    page.fonts = {
+        "Nunito": "https://fonts.gstatic.com/s/nunito/v25/XRXI3I6Li01BKofiOc5wtlZ2di8HDIkhdTQ3j6zbXWjgeg.woff2"
+    }
     apply_theme(page, session.theme)
 
     def route_change(e):
@@ -30,6 +33,7 @@ def main(page: ft.Page):
         from screens.exercise_screen import build_exercise_screen
         from screens.settings_screen import build_settings_screen
         from screens.pattern_screen import build_pattern_screen
+        from screens.logic_screen import build_logic_screen
 
         route = page.route
         page.views.clear()
@@ -39,6 +43,10 @@ def main(page: ft.Page):
 
         if route == "/settings":
             page.views.append(build_settings_screen(page, session))
+
+        elif route == "/logic":
+            page.views.append(build_level_screen(page, session))
+            page.views.append(build_logic_screen(page, session))
 
         elif route in ("/level", "/sublevel", "/pattern", "/exercise"):
             page.views.append(build_level_screen(page, session))
