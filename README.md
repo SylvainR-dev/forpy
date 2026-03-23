@@ -13,6 +13,11 @@ Rather than grinding through a handful of long exercises, FORPY generates mini-e
 
 ---
 
+## Demo
+[![Watch the demo](miniature.jpg)](https://youtu.be/KWCZ96jlIlk)
+
+
+
 ## Features
 
 - **6 progressive levels** — Noob → Débutant → Intermédiaire → Intermédiaire ++ → POO → Expert Architecture
