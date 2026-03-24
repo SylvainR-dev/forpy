@@ -25,4 +25,15 @@ testpaths  = ["tests"]
 # Run:  python -m flet.cli build <platform>
 #   platforms : windows | linux | apk | ipa | macos | web
 #   example   : python -m flet.cli build windows --project forpy --build-version 1.0.0
+#   example   : python -m flet.cli build apk --project forpy --build-version 1.0.0
 # Requires Flutter SDK — see https://flet.dev/docs/publish
+#
+# Icon is configured below in [tool.flet] — applied automatically to all platforms.
+# Alternatively, pass it explicitly: flet build windows --icon icons/icon.png
+
+[tool.flet]
+icon = "icons/icon.png"
+
+[tool.flet.app]
+name = "FORPY"
+description = "Open source Python learning app — Generate unlimited mini-exercises with AI"

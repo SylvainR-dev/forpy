@@ -168,16 +168,19 @@ def build_settings_screen(page: ft.Page, session: SessionState) -> ft.View:
                         ft.Divider(height=1, color=c["border"], thickness=1),
                         preferences_card,
                         ft.Container(height=8),
-                        ft.ElevatedButton(
-                            content=t["save"],
-                            on_click=save,
-                            height=50,
-                            expand=True,
-                            bgcolor=c["btn_bg"],
-                            color=c["btn_text"],
-                            style=ft.ButtonStyle(
-                                shape=ft.RoundedRectangleBorder(radius=10),
-                            ),
+                        ft.Row(
+                            controls=[
+                                ft.ElevatedButton(
+                                    content=t["save"],
+                                    on_click=save,
+                                    height=50,
+                                    bgcolor=c["btn_bg"],
+                                    color=c["btn_text"],
+                                    style=ft.ButtonStyle(
+                                        shape=ft.RoundedRectangleBorder(radius=10),
+                                    ),
+                                ),
+                            ],
                         ),
                         feedback,
                     ],

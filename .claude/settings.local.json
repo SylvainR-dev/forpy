@@ -36,7 +36,8 @@
       "Bash(pip show:*)",
       "Bash(python -c \"import flet; print\\(flet.VERSION\\)\")",
       "Bash(python:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(flet build:*)"
     ]
   }
 }

@@ -5,13 +5,11 @@ import sys
 
 def _get_settings_path() -> str:
     if sys.platform == "android":
-        # Android : répertoire de données de l'app (accessible en permanence)
-        base = os.path.expanduser("~")
+        settings_dir = "/data/user/0/com.flet.forpy/files"
     else:
-        # Windows, Linux, macOS : ~/.forpy/
-        base = os.path.expanduser("~")
+        # Windows (win32) et Linux : ~/.forpy/
+        settings_dir = os.path.expanduser("~/.forpy")
 
-    settings_dir = os.path.join(base, ".forpy")
     os.makedirs(settings_dir, exist_ok=True)
     return os.path.join(settings_dir, "settings.json")
 
