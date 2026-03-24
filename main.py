@@ -2,16 +2,43 @@ import flet as ft
 from utils.session_state import SessionState
 from utils.theme import apply_theme
 
-session = SessionState()
-
-
 def main(page: ft.Page):
+    try:
+        _main(page)
+    except Exception as _e:
+        import traceback
+        _tb = traceback.format_exc()
+        try:
+            page.bgcolor = "#1a1a2e"
+            page.controls.clear()
+            page.add(
+                ft.Text("FORPY — CRASH AT STARTUP", color="#ff4444", size=16, weight=ft.FontWeight.BOLD),
+                ft.Text(str(_e), color="#ff8800", size=13, selectable=True),
+                ft.Text(_tb, color="#ffffff", size=11, selectable=True, font_family="monospace"),
+            )
+            page.update()
+        except Exception:
+            pass
+
+
+def _main(page: ft.Page):
+    session = SessionState()
     page.title = "FORPY"
     page.padding = 10
-    page.fonts = {
-        "Nunito": "https://fonts.gstatic.com/s/nunito/v25/XRXI3I6Li01BKofiOc5wtlZ2di8HDIkhdTQ3j6zbXWjgeg.woff2"
-    }
-    apply_theme(page, session.theme)
+    try:
+        page.fonts = {
+            "Nunito": "https://fonts.gstatic.com/s/nunito/v25/XRXI3I6Li01BKofiOc5wtlZ2di8HDIkhdTQ3j6zbXWjgeg.woff2"
+        }
+    except Exception:
+        pass  # Font URL not available in packaged APK — fallback to system font
+    try:
+        apply_theme(page, session.theme)
+    except Exception:
+        try:
+            page.bgcolor = "#1a1a2e"
+            page.theme_mode = ft.ThemeMode.DARK
+        except Exception:
+            pass
 
     def route_change(e):
         """
@@ -39,44 +66,76 @@ def main(page: ft.Page):
         page.views.clear()
 
         # Layer 1 — always present
-        page.views.append(build_home_screen(page, session))
+        try:
+            page.views.append(build_home_screen(page, session))
+        except Exception as e:
+            page.views.append(ft.View(
+                route="/home",
+                controls=[ft.Text(f"Home screen error: {e}", color="red", selectable=True)],
+            ))
+
+        def safe_append(builder, *args):
+            try:
+                page.views.append(builder(*args))
+            except Exception as ex:
+                page.views.append(ft.View(
+                    route=route,
+                    controls=[ft.Text(f"Screen error: {ex}", color="red", selectable=True)],
+                ))
 
         if route == "/settings":
-            page.views.append(build_settings_screen(page, session))
+            safe_append(build_settings_screen, page, session)
 
         elif route == "/logic":
-            page.views.append(build_level_screen(page, session))
-            page.views.append(build_logic_screen(page, session))
+            safe_append(build_level_screen, page, session)
+            safe_append(build_logic_screen, page, session)
 
         elif route in ("/level", "/sublevel", "/pattern", "/exercise"):
-            page.views.append(build_level_screen(page, session))
+            safe_append(build_level_screen, page, session)
 
             if route in ("/sublevel", "/pattern", "/exercise"):
-                page.views.append(build_sublevel_screen(page, session))
+                safe_append(build_sublevel_screen, page, session)
 
                 if route in ("/pattern", "/exercise") and session.current_sublevel.startswith("pattern_"):
-                    page.views.append(build_pattern_screen(page, session))
+                    safe_append(build_pattern_screen, page, session)
 
                     if route == "/exercise":
-                        page.views.append(build_exercise_screen(page, session))
+                        safe_append(build_exercise_screen, page, session)
 
                 elif route == "/exercise":
-                    page.views.append(build_exercise_screen(page, session))
+                    safe_append(build_exercise_screen, page, session)
 
-        page.update()
+        try:
+            page.update()
+        except Exception:
+            pass
 
     def view_pop(e):
         """Handle physical back button (Android / desktop window close gesture)."""
-        if len(page.views) > 1:
-            page.views.pop()
-            top_view = page.views[-1]
-            page.go(top_view.route)
-        else:
-            page.go("/home")
+        try:
+            if len(page.views) > 1:
+                page.views.pop()
+                top_view = page.views[-1]
+                page.go(top_view.route)
+            else:
+                page.go("/home")
+        except Exception:
+            try:
+                page.go("/home")
+            except Exception:
+                pass
 
     page.on_route_change = route_change
     page.on_view_pop = view_pop
-    page.go("/home")
+
+    try:
+        page.go("/home")
+    except Exception as e:
+        try:
+            page.add(ft.Text(f"Navigation error: {e}", color="red"))
+            page.update()
+        except Exception:
+            pass
 
 
 if __name__ == "__main__":

@@ -35,3 +35,7 @@ def apply_theme(page: ft.Page, theme: str) -> None:
     c = get_colors(theme)
     page.bgcolor = c["bg"]
     page.theme_mode = ft.ThemeMode.DARK if theme == "dark" else ft.ThemeMode.LIGHT
+    try:
+        page.update()
+    except Exception:
+        pass  # page not yet mounted — safe to ignore at startup

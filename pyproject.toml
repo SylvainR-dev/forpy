@@ -1,5 +1,5 @@
 [project]
-name = "forpy"
+name = "ForPy"
 version = "1.0.0"
 description = "Open source Python learning app — Generate unlimited mini-exercises with AI"
 license = { text = "MIT" }
@@ -24,8 +24,8 @@ testpaths  = ["tests"]
 # ── Flet build metadata ────────────────────────────────────────────────────────
 # Run:  python -m flet.cli build <platform>
 #   platforms : windows | linux | apk | ipa | macos | web
-#   example   : python -m flet.cli build windows --project forpy --build-version 1.0.0
-#   example   : python -m flet.cli build apk --project forpy --build-version 1.0.0
+#   example   : python -m flet.cli build windows --project ForPy --build-version 1.0.0
+#   example   : python -m flet.cli build apk --project ForPy --build-version 1.0.0
 # Requires Flutter SDK — see https://flet.dev/docs/publish
 #
 # Icon is configured below in [tool.flet] — applied automatically to all platforms.
@@ -35,5 +35,11 @@ testpaths  = ["tests"]
 icon = "icons/icon.png"
 
 [tool.flet.app]
-name = "FORPY"
+name = "ForPy"
 description = "Open source Python learning app — Generate unlimited mini-exercises with AI"
+
+[tool.flet.flutter.flutter_native_splash]
+color = "#1a1a2e"
+image = "assets/splash.png"
+color_dark = "#1a1a2e"
+image_dark = "assets/splash.png"

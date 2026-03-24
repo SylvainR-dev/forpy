@@ -3,18 +3,33 @@ import os
 import sys
 
 
-def _get_settings_path() -> str:
-    if sys.platform == "android":
-        settings_dir = "/data/user/0/com.flet.forpy/files"
-    else:
-        # Windows (win32) et Linux : ~/.forpy/
-        settings_dir = os.path.expanduser("~/.forpy")
+def _is_android() -> bool:
+    return (
+        os.path.exists("/data/user/0")
+        or "ANDROID_ROOT" in os.environ
+        or "ANDROID_DATA" in os.environ
+    )
 
+
+def _get_settings_path() -> str:
+    if _is_android():
+        # Flet/Android expose le répertoire de données via cette variable d'env
+        # Ce chemin n'est disponible qu'une fois Flet initialisé — ne pas appeler
+        # cette fonction au niveau module, uniquement depuis __init__
+        data_dir = os.environ.get("FLET_APP_DATA_DIR", "")
+        if not data_dir:
+            # Fallback robuste : /data/data/<package>/files (toujours accessible)
+            import glob as _glob
+            candidates = _glob.glob("/data/data/*/files")
+            if candidates:
+                data_dir = candidates[0]
+            else:
+                data_dir = "/data/data/forpy/files"
+        return os.path.join(data_dir, "settings.json")
+    # Windows (win32) et Linux : ~/.forpy/
+    settings_dir = os.path.expanduser("~/.forpy")
     os.makedirs(settings_dir, exist_ok=True)
     return os.path.join(settings_dir, "settings.json")
-
-
-SETTINGS_PATH = _get_settings_path()
 
 DEFAULT_SETTINGS = {
     "api_key": "",
@@ -49,6 +64,9 @@ class SessionState:
         self.current_pattern: str = ""
         self.current_logic_image: str = ""
 
+        # Chemin calculé ici (après init Flet) et non au niveau module
+        self._settings_path: str = _get_settings_path()
+
         # Persistent settings
         self._settings: dict = self._load_settings()
 
@@ -57,9 +75,9 @@ class SessionState:
     # ------------------------------------------------------------------
 
     def _load_settings(self) -> dict:
-        if os.path.exists(SETTINGS_PATH):
+        if os.path.exists(self._settings_path):
             try:
-                with open(SETTINGS_PATH, encoding="utf-8") as f:
+                with open(self._settings_path, encoding="utf-8") as f:
                     data = json.load(f)
                 return {**DEFAULT_SETTINGS, **data}
             except (json.JSONDecodeError, OSError):
@@ -67,7 +85,7 @@ class SessionState:
         return dict(DEFAULT_SETTINGS)
 
     def save_settings(self) -> None:
-        with open(SETTINGS_PATH, "w", encoding="utf-8") as f:
+        with open(self._settings_path, "w", encoding="utf-8") as f:
             json.dump(self._settings, f, indent=4, ensure_ascii=False)
 
     # ------------------------------------------------------------------

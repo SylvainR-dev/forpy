@@ -315,10 +315,10 @@ def build_pattern_screen(page: ft.Page, session: SessionState) -> ft.View:
         for name, btn in cat_buttons.items():
             if name == category:
                 btn.bgcolor = c["accent"]
-                btn.color = "#ffffff"
+                btn.content.color = "#ffffff"
             else:
                 btn.bgcolor = c["btn_bg"]
-                btn.color = c["btn_text"]
+                btn.content.color = c["btn_text"]
         _fill_patterns(category)
         page.update()
 
@@ -332,10 +332,13 @@ def build_pattern_screen(page: ft.Page, session: SessionState) -> ft.View:
     for cat in categories:
         is_first = cat == selected["category"]
         btn = ft.ElevatedButton(
-            content=_cat_label(cat),
+            content=ft.Text(
+                _cat_label(cat),
+                size=13,
+                color="#ffffff" if is_first else c["btn_text"],
+                text_align=ft.TextAlign.LEFT,
+            ),
             bgcolor=c["accent"] if is_first else c["btn_bg"],
-            color="#ffffff" if is_first else c["btn_text"],
-            height=44,
             on_click=lambda _, cat=cat: _select_category(cat),
             style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=8)),
         )
@@ -378,7 +381,7 @@ def build_pattern_screen(page: ft.Page, session: SessionState) -> ft.View:
                                 spacing=8,
                                 scroll=ft.ScrollMode.AUTO,
                             ),
-                            width=130,
+                            width=190,
                             bgcolor=c["card_bg"],
                             border_radius=10,
                             padding=10,

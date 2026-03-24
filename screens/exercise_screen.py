@@ -84,8 +84,10 @@ def build_exercise_screen(page: ft.Page, session: SessionState) -> ft.View:
                     correction_card,
                     explication_card,
                     deroulement_card,
-                    ft.Container(height=4),
-                    another_btn,
+                    ft.Container(
+                        content=another_btn,
+                        padding=ft.padding.only(top=4, bottom=80),
+                    ),
                 ],
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                 spacing=16,
@@ -225,7 +227,7 @@ async def _async_generate(
         )
 
         provider = get_provider(session.provider)
-        exercise = await provider.call_async(prompt, session.api_key)
+        exercise = await provider.call_async(prompt, session.api_key, session.current_sublevel)
 
         session.update_last_topic(exercise.get("enonce", "")[:80])
         state["exercise"] = exercise

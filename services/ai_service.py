@@ -68,21 +68,21 @@ class AIProvider:
     Consumers call `call_async`, which handles timeout and retry.
     """
 
-    async def _call_once(self, prompt: str, api_key: str) -> dict:
+    async def _call_once(self, prompt: str, api_key: str, sublevel: str = "") -> dict:
         """Single raw API call. Must be overridden.
         Convert all SDK-specific errors to ValueError with a key:
             invalid_key | quota | timeout | json
         """
         raise NotImplementedError
 
-    async def call_async(self, prompt: str, api_key: str) -> dict:
+    async def call_async(self, prompt: str, api_key: str, sublevel: str = "") -> dict:
         """Public entry point — adds timeout wrapper and retry logic."""
         last_exc: Exception = RuntimeError("Unknown error")
 
         for attempt in range(1, MAX_RETRIES + 1):
             try:
                 return await asyncio.wait_for(
-                    self._call_once(prompt, api_key),
+                    self._call_once(prompt, api_key, sublevel),
                     timeout=CALL_TIMEOUT,
                 )
 
@@ -127,14 +127,14 @@ class AIProvider:
 class ClaudeProvider(AIProvider):
     MODEL = "claude-haiku-4-5-20251001"
 
-    async def _call_once(self, prompt: str, api_key: str) -> dict:
+    async def _call_once(self, prompt: str, api_key: str, sublevel: str = "") -> dict:
         import anthropic
 
         client = anthropic.AsyncAnthropic(api_key=api_key)
         try:
             message = await client.messages.create(
                 model=self.MODEL,
-                max_tokens=1024,
+                max_tokens=3000,
                 messages=[{"role": "user", "content": prompt}],
             )
         except anthropic.AuthenticationError:
@@ -155,7 +155,7 @@ class ClaudeProvider(AIProvider):
             )
             raise
 
-        return _parse_json(message.content[0].text)
+        return _parse_json(message.content[0].text, sublevel)
 
 
 # ---------------------------------------------------------------------------
@@ -165,7 +165,7 @@ class ClaudeProvider(AIProvider):
 class OpenAIProvider(AIProvider):
     MODEL = "gpt-4o-mini"
 
-    async def _call_once(self, prompt: str, api_key: str) -> dict:
+    async def _call_once(self, prompt: str, api_key: str, sublevel: str = "") -> dict:
         import openai
 
         client = openai.AsyncOpenAI(api_key=api_key)
@@ -173,7 +173,7 @@ class OpenAIProvider(AIProvider):
             response = await client.chat.completions.create(
                 model=self.MODEL,
                 messages=[{"role": "user", "content": prompt}],
-                max_tokens=1024,
+                max_tokens=3000,
             )
         except openai.AuthenticationError:
             api_logger.warning("[OpenAIProvider] Invalid API key")
@@ -193,7 +193,7 @@ class OpenAIProvider(AIProvider):
             )
             raise
 
-        return _parse_json(response.choices[0].message.content)
+        return _parse_json(response.choices[0].message.content, sublevel)
 
 
 # ---------------------------------------------------------------------------
@@ -203,7 +203,7 @@ class OpenAIProvider(AIProvider):
 class GeminiProvider(AIProvider):
     MODEL = "gemini-1.5-flash"
 
-    async def _call_once(self, prompt: str, api_key: str) -> dict:
+    async def _call_once(self, prompt: str, api_key: str, sublevel: str = "") -> dict:
         import google.generativeai as genai
 
         genai.configure(api_key=api_key)
@@ -230,7 +230,7 @@ class GeminiProvider(AIProvider):
             api_logger.error("[GeminiProvider] Unexpected error: %s", exc)
             raise
 
-        return _parse_json(response.text)
+        return _parse_json(response.text, sublevel)
 
 
 # ---------------------------------------------------------------------------
@@ -241,7 +241,7 @@ class GrokProvider(AIProvider):
     MODEL = "grok-3"
     BASE_URL = "https://api.x.ai/v1"
 
-    async def _call_once(self, prompt: str, api_key: str) -> dict:
+    async def _call_once(self, prompt: str, api_key: str, sublevel: str = "") -> dict:
         import openai
 
         client = openai.AsyncOpenAI(api_key=api_key, base_url=self.BASE_URL)
@@ -249,7 +249,7 @@ class GrokProvider(AIProvider):
             response = await client.chat.completions.create(
                 model=self.MODEL,
                 messages=[{"role": "user", "content": prompt}],
-                max_tokens=1024,
+                max_tokens=3000,
             )
         except openai.AuthenticationError:
             api_logger.warning("[GrokProvider] Invalid API key")
@@ -269,7 +269,7 @@ class GrokProvider(AIProvider):
             )
             raise
 
-        return _parse_json(response.choices[0].message.content)
+        return _parse_json(response.choices[0].message.content, sublevel)
 
 
 # ---------------------------------------------------------------------------
@@ -280,7 +280,7 @@ class LlamaProvider(AIProvider):
     MODEL = "llama3.2"
     BASE_URL = "http://localhost:11434/v1"
 
-    async def _call_once(self, prompt: str, api_key: str) -> dict:
+    async def _call_once(self, prompt: str, api_key: str, sublevel: str = "") -> dict:
         import openai
 
         # Ollama accepts any non-empty string as api_key
@@ -290,7 +290,7 @@ class LlamaProvider(AIProvider):
             response = await client.chat.completions.create(
                 model=self.MODEL,
                 messages=[{"role": "user", "content": prompt}],
-                max_tokens=1024,
+                max_tokens=3000,
             )
         except openai.AuthenticationError:
             api_logger.warning("[LlamaProvider] Invalid API key")
@@ -310,7 +310,7 @@ class LlamaProvider(AIProvider):
             )
             raise
 
-        return _parse_json(response.choices[0].message.content)
+        return _parse_json(response.choices[0].message.content, sublevel)
 
 
 # ---------------------------------------------------------------------------
@@ -321,7 +321,7 @@ class MistralProvider(AIProvider):
     MODEL = "mistral-small-latest"
     BASE_URL = "https://api.mistral.ai/v1"
 
-    async def _call_once(self, prompt: str, api_key: str) -> dict:
+    async def _call_once(self, prompt: str, api_key: str, sublevel: str = "") -> dict:
         import openai
 
         client = openai.AsyncOpenAI(api_key=api_key, base_url=self.BASE_URL)
@@ -329,7 +329,7 @@ class MistralProvider(AIProvider):
             response = await client.chat.completions.create(
                 model=self.MODEL,
                 messages=[{"role": "user", "content": prompt}],
-                max_tokens=1024,
+                max_tokens=3000,
             )
         except openai.AuthenticationError:
             api_logger.warning("[MistralProvider] Invalid API key")
@@ -349,7 +349,7 @@ class MistralProvider(AIProvider):
             )
             raise
 
-        return _parse_json(response.choices[0].message.content)
+        return _parse_json(response.choices[0].message.content, sublevel)
 
 
 # ---------------------------------------------------------------------------
@@ -380,7 +380,7 @@ def get_provider(provider_name: str) -> AIProvider:
 _REQUIRED_KEYS = {"enonce", "correction", "explication", "deroulement"}
 
 
-def _parse_json(raw: str) -> dict:
+def _parse_json(raw: str, sublevel: str = "") -> dict:
     """Parse AI response to a dict with the 4 exercise fields.
 
     Strategy:
@@ -393,6 +393,13 @@ def _parse_json(raw: str) -> dict:
     Missing fields are logged as a warning but do NOT raise —
     partial data is better than no data.
     """
+    # TEMP DIAG — log raw response for intro_poo to diagnose parser failures
+    if sublevel == "intro_poo":
+        json_logger.warning(
+            "[TEMP DIAG intro_poo] Raw AI response:\n--- BEGIN ---\n%s\n--- END ---",
+            raw,
+        )
+
     cleaned = re.sub(r"```(?:json)?\s*", "", raw).replace("```", "").strip()
 
     data: dict | None = None

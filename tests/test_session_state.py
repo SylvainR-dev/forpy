@@ -20,9 +20,9 @@ import utils.session_state as ss_module
 
 @pytest.fixture
 def tmp_settings(tmp_path, monkeypatch):
-    """Redirect SETTINGS_PATH to a temp file for each test."""
+    """Redirect settings path to a temp file for each test."""
     path = str(tmp_path / "settings.json")
-    monkeypatch.setattr(ss_module, "SETTINGS_PATH", path)
+    monkeypatch.setattr(ss_module, "_get_settings_path", lambda: path)
     return path
 
 
