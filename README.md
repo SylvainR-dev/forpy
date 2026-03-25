@@ -9,7 +9,8 @@ Generate unlimited mini-exercises with AI, choose your level, and get instant co
 
 ## Why FORPY?
 
-Rather than grinding through a handful of long exercises, FORPY generates mini-exercises in seconds. In the time it takes to do 10 classic exercises, you can work through 80+ different exercises across all Python concepts — from beginner variables to expert architecture patterns.
+Traditional exercises are repetitive and boring. While a typical learner works through 1 tedious exercise, a FORPY user discovers dozens of different ones in the same amount of time.
+This is learning through volume. — from beginner variables to expert architecture patterns.
 
 ---
 
