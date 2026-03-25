@@ -1,6 +1,8 @@
+import sys
 import flet as ft
 from utils.session_state import SessionState
 from utils.theme import apply_theme
+
 
 def main(page: ft.Page):
     try:

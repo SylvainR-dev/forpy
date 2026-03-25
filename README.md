@@ -106,12 +106,58 @@ python -m flet.cli build apk --project forpy --build-version 1.0.0
 
 ```
 forpy/
-├── main.py               # Entry point
-├── screens/              # UI screens (home, level, sublevel, exercise, settings)
-├── services/             # AI provider abstraction + prompt builder
-├── prompts/python/       # 25 prompt files, one per sub-level
-├── utils/                # Session state, translations
-└── logs/                 # Local error logs (api_errors, json_errors, app)
+├── main.py                          # Entry point — Flet routing, theme init
+├── pyproject.toml                   # Project config / dependencies
+├── requirements.txt                 # pip dependencies
+├── settings.example.json            # Config template (no API key)
+│
+├── screens/
+│   ├── home_screen.py               # Home — logo, chapter buttons, settings link
+│   ├── chapter_screen.py            # Chapter selection (Python, Python ML…)
+│   ├── level_screen.py              # Level selection (6 levels)
+│   ├── sublevel_screen.py           # Sub-level selection
+│   ├── exercise_screen.py           # Exercise display (4 blocks + "Another exercise")
+│   ├── pattern_screen.py            # Pattern selection — 2-column menu
+│   ├── logic_screen.py              # "See the logic" image view per level
+│   └── settings_screen.py          # API key, provider, languages, dark/light toggle
+│
+├── services/
+│   ├── ai_service.py                # AI calls — Strategy pattern (Claude/OpenAI/Gemini/compatible)
+│   └── prompt_builder.py           # Prompt loader + variable injection
+│
+├── prompts/python/                  # One .txt file per sub-level (25 files)
+│   ├── noob.txt
+│   ├── debutant.txt / debutant_plus.txt / debug_debutant.txt
+│   ├── intermediaire.txt / intermediaire_avance.txt
+│   ├── debug_intermediaire.txt / pythonique_intermediaire.txt / pattern_intermediaire.txt
+│   ├── fonctions_avancees.txt / manipulation_structure.txt
+│   ├── entree_sortie_erreurs.txt / organisation_code.txt
+│   ├── debug_intermediaire_plus.txt / pythonique_intermediaire_plus.txt / pattern_intermediaire_plus.txt
+│   ├── intro_poo.txt / poo_plus.txt / debug_poo.txt / poo_pythonique.txt / pattern_poo.txt
+│   └── architecture.txt / debug_architecture.txt / architecture_pythonique.txt / pattern_expert.txt
+│
+├── utils/
+│   ├── session_state.py             # Read/write settings.json — last topic, theme, pattern, languages
+│   ├── theme.py                     # Dark/light palettes + UI style helpers
+│   ├── translations.py             # Translation loader (reads translations.json)
+│   └── translations.json           # All UI strings by language (EN, FR…)
+│
+├── assets/                          # Static resources
+│   ├── icon.png / logo-forpy.png
+│   ├── splash.png / splash-dark.png
+│   └── logique_*.png                # "See the logic" diagrams per level
+│
+├── tests/
+│   ├── conftest.py                  # Shared pytest fixtures
+│   ├── test_ai_service.py
+│   ├── test_prompt_builder.py
+│   ├── test_session_state.py
+│   └── test_translations.py
+│
+└── logs/
+    ├── app.log                      # General logs
+    ├── api_errors.log               # AI call errors
+    └── json_errors.log              # JSON parsing errors
 ```
 
 ---

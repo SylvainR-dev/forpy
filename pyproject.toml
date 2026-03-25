@@ -32,14 +32,21 @@ testpaths  = ["tests"]
 # Alternatively, pass it explicitly: flet build windows --icon icons/icon.png
 
 [tool.flet]
+org = "com.forpy"
 icon = "icons/icon.png"
 
 [tool.flet.app]
 name = "ForPy"
 description = "Open source Python learning app — Generate unlimited mini-exercises with AI"
 
+[tool.flet.android]
+splash_color = "#1a1a2e"
+splash_dark_color = "#1a1a2e"
+
+[tool.flet.app.boot_screen]
+show = true
+bgcolor = "#1a1a2e"
+
 [tool.flet.flutter.flutter_native_splash]
 color = "#1a1a2e"
-image = "assets/splash.png"
 color_dark = "#1a1a2e"
-image_dark = "assets/splash.png"

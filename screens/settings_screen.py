@@ -1,5 +1,5 @@
 import flet as ft
-from utils.session_state import SessionState
+from utils.session_state import SessionState, get_settings_path
 from utils.translations import get_translations
 from utils.theme import get_colors, apply_theme
 
@@ -131,12 +131,17 @@ def build_settings_screen(page: ft.Page, session: SessionState) -> ft.View:
     feedback = ft.Text("", color=ft.Colors.GREEN_400)
 
     def save(_) -> None:
-        session.api_key = api_key_field.value.strip()
-        session.provider = selected_provider[0]
-        session.interface_language = interface_lang_dropdown.value
-        session.exercise_language = exercise_lang_dropdown.value
-        session.save_settings()
-        feedback.value = t["settings_saved"]
+        try:
+            session.api_key = api_key_field.value.strip()
+            session.provider = selected_provider[0]
+            session.interface_language = interface_lang_dropdown.value
+            session.exercise_language = exercise_lang_dropdown.value
+            session.save_settings()
+            feedback.value = t["settings_saved"]
+        except Exception as e:
+            with open("logs/app.log", "a") as log:
+                log.write(f"[SAVE ERROR] {e}\n")
+            feedback.value = str(e)
         page.update()
 
     return ft.View(

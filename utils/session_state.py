@@ -3,33 +3,12 @@ import os
 import sys
 
 
-def _is_android() -> bool:
-    return (
-        os.path.exists("/data/user/0")
-        or "ANDROID_ROOT" in os.environ
-        or "ANDROID_DATA" in os.environ
-    )
-
-
-def _get_settings_path() -> str:
-    if _is_android():
-        # Flet/Android expose le répertoire de données via cette variable d'env
-        # Ce chemin n'est disponible qu'une fois Flet initialisé — ne pas appeler
-        # cette fonction au niveau module, uniquement depuis __init__
-        data_dir = os.environ.get("FLET_APP_DATA_DIR", "")
-        if not data_dir:
-            # Fallback robuste : /data/data/<package>/files (toujours accessible)
-            import glob as _glob
-            candidates = _glob.glob("/data/data/*/files")
-            if candidates:
-                data_dir = candidates[0]
-            else:
-                data_dir = "/data/data/forpy/files"
+def get_settings_path() -> str:
+    if sys.platform == "android":
+        data_dir = os.environ.get("FLET_APP_STORAGE_DATA", "")
         return os.path.join(data_dir, "settings.json")
-    # Windows (win32) et Linux : ~/.forpy/
-    settings_dir = os.path.expanduser("~/.forpy")
-    os.makedirs(settings_dir, exist_ok=True)
-    return os.path.join(settings_dir, "settings.json")
+    else:
+        return "settings.json"
 
 DEFAULT_SETTINGS = {
     "api_key": "",
@@ -65,7 +44,7 @@ class SessionState:
         self.current_logic_image: str = ""
 
         # Chemin calculé ici (après init Flet) et non au niveau module
-        self._settings_path: str = _get_settings_path()
+        self._settings_path: str = get_settings_path()
 
         # Persistent settings
         self._settings: dict = self._load_settings()
@@ -75,18 +54,33 @@ class SessionState:
     # ------------------------------------------------------------------
 
     def _load_settings(self) -> dict:
+        print(f"[FORPY DEBUG] _load_settings: checking path '{self._settings_path}'", flush=True)
         if os.path.exists(self._settings_path):
             try:
                 with open(self._settings_path, encoding="utf-8") as f:
                     data = json.load(f)
+                print(f"[FORPY DEBUG] _load_settings: loaded OK, keys = {list(data.keys())}", flush=True)
                 return {**DEFAULT_SETTINGS, **data}
-            except (json.JSONDecodeError, OSError):
-                pass
+            except (json.JSONDecodeError, OSError) as e:
+                print(f"[FORPY DEBUG] _load_settings: error reading file: {e}", flush=True)
+        else:
+            print(f"[FORPY DEBUG] _load_settings: file does NOT exist at '{self._settings_path}'", flush=True)
         return dict(DEFAULT_SETTINGS)
 
     def save_settings(self) -> None:
-        with open(self._settings_path, "w", encoding="utf-8") as f:
-            json.dump(self._settings, f, indent=4, ensure_ascii=False)
+        print(f"[FORPY DEBUG] save_settings: writing to '{self._settings_path}'", flush=True)
+        try:
+            # S'assurer que le répertoire parent existe
+            parent = os.path.dirname(self._settings_path)
+            if parent:
+                os.makedirs(parent, exist_ok=True)
+                print(f"[FORPY DEBUG] save_settings: parent dir '{parent}' exists = {os.path.exists(parent)}", flush=True)
+            with open(self._settings_path, "w", encoding="utf-8") as f:
+                json.dump(self._settings, f, indent=4, ensure_ascii=False)
+            print(f"[FORPY DEBUG] save_settings: write SUCCESS, file exists = {os.path.exists(self._settings_path)}", flush=True)
+        except OSError as e:
+            print(f"[FORPY DEBUG] save_settings: FAILED with error: {e}", flush=True)
+            raise
 
     # ------------------------------------------------------------------
     # Settings accessors
