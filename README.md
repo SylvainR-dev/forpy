@@ -16,12 +16,21 @@ Rather than grinding through a handful of long exercises, FORPY generates mini-e
 ## Demo
 [![Watch the demo](miniature.jpg)](https://youtu.be/KWCZ96jlIlk)
 
+---
 
+## Documentation
+
+- [Architecture](docs/architecture.md) — global architecture, design patterns, data model, and key technical decisions
+- [Prompt System](docs/prompt_system.md) — universal JSON format, prompt caching strategy, variable injection, and anti-repetition system
+
+---
 
 ## Features
 
 - **6 progressive levels** — Noob → Débutant → Intermédiaire → Intermédiaire ++ → POO → Expert Architecture
 - **25 specialised sub-levels** — classic exercises, debugging sessions, Pythonic rewrites, and design patterns
+- **"See the Logic"** — each level includes a visual summary of its key mental model, before you start generating exercises
+- **Pattern Selector** — from Intermediate onwards, target a specific language construct or design pattern via a 2-column menu
 - **AI-powered generation** — every exercise is unique, never repeated back-to-back
 - **4-part correction** — statement, Python code solution, line-by-line explanation, and oral walkthrough
 - **Multi-provider** — Anthropic (Claude), OpenAI (GPT), Google (Gemini)
@@ -144,8 +153,12 @@ forpy/
 │
 ├── assets/                          # Static resources
 │   ├── icon.png / logo-forpy.png
-│   ├── splash.png / splash-dark.png
+│   ├── splash.png / splash_dark.png
 │   └── logique_*.png                # "See the logic" diagrams per level
+│
+├── docs/
+│   ├── architecture.md              # Global architecture and design decisions
+│   └── prompt_system.md            # Prompt system, JSON format, caching strategy
 │
 ├── tests/
 │   ├── conftest.py                  # Shared pytest fixtures
@@ -162,6 +175,13 @@ forpy/
 
 ---
 
+## Documentation
+
+- [Architecture](docs/architecture.md) — global architecture, design patterns, data model, and key technical decisions
+- [Prompt System](docs/prompt_system.md) — universal JSON format, prompt caching strategy, variable injection, and anti-repetition system
+
+---
+
 ## Contributing
 
 Contributions are welcome. The easiest way to contribute is to improve or add prompt files in `prompts/python/`. Each file:
@@ -169,7 +189,7 @@ Contributions are welcome. The easiest way to contribute is to improve or add pr
 - Must contain `{last_topic}` (anti-repetition placeholder)
 - Must produce a JSON response with exactly 4 keys: `enonce`, `correction`, `explication`, `deroulement`
 
-See [CLAUDE.md](CLAUDE.md) for the full architecture documentation.
+See [docs/architecture.md](docs/architecture.md) and [docs/prompt_system.md](docs/prompt_system.md) for full documentation.
 
 ---
 
