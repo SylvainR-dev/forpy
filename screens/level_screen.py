@@ -117,6 +117,59 @@ def build_level_screen(page: ft.Page, session: SessionState) -> ft.View:
             )
         )
 
+    qcm_btn = ft.ElevatedButton(
+        content=t.get("qcm_python", "QCM Python"),
+        bgcolor=c["btn_bg"],
+        color=c["btn_text"],
+        height=48,
+        on_click=lambda _: page.go("/qcm"),
+        style=ft.ButtonStyle(
+            shape=ft.RoundedRectangleBorder(radius=8),
+        ),
+    )
+    items.append(
+        ft.Container(
+            content=ft.Row(
+                controls=[qcm_btn],
+                vertical_alignment=ft.CrossAxisAlignment.CENTER,
+            ),
+            padding=ft.padding.only(left=30, right=30, top=8, bottom=8),
+        )
+    )
+    items.append(
+        ft.Container(
+            content=ft.Divider(height=1, color=c["separator"], thickness=1),
+            padding=ft.padding.symmetric(horizontal=30),
+        )
+    )
+
+    qcm_architecture_btn = ft.ElevatedButton(
+        content=t.get("qcm_architecture", "Architecture Quiz"),
+        bgcolor=c["btn_bg"],
+        color=c["btn_text"],
+        height=48,
+        on_click=lambda _: page.go("/qcm_architecture"),
+        style=ft.ButtonStyle(
+            shape=ft.RoundedRectangleBorder(radius=8),
+        ),
+    )
+    items.append(
+        ft.Container(
+            content=ft.Row(
+                controls=[qcm_architecture_btn],
+                vertical_alignment=ft.CrossAxisAlignment.CENTER,
+            ),
+            padding=ft.padding.only(left=30, right=30, top=8, bottom=8),
+        )
+    )
+    items.append(
+        ft.Container(
+            content=ft.Divider(height=1, color=c["separator"], thickness=1),
+            padding=ft.padding.symmetric(horizontal=30),
+        )
+    )
+    items.append(ft.Container(height=60))
+
     return ft.View(
         route="/level",
         bgcolor=c["bg"],

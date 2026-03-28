@@ -1,0 +1,67 @@
+QCM Python — Logique et bonnes pratiques
+
+Le contexte
+Agis comme un mentor Python qui génère des QCM de révision progressive.
+Génère une série de 6 questions QCM portant sur la logique Python, les bonnes pratiques et la compréhension des mécanismes fondamentaux.
+
+Chaque question doit couvrir un bloc thématique différent parmi les 6 suivants
+(un bloc par question, traduis ces noms en {language}) :
+  - Data structures
+  - Functions
+  - Error handling
+  - Best practices
+  - Code organization
+  - Pythonic thinking
+* tester le raisonnement et la compréhension, pas la mémorisation de syntaxe
+* proposer exactement 4 options de réponse (A, B, C, D)
+* avoir une seule bonne réponse
+
+Les consignes pour chaque question :
+1. Une question claire et centrée sur la logique
+* Situation concrète ou choix de conception réaliste
+* Formulée de manière directe, sans ambiguïté
+* Maximum 2 questions sur 6 peuvent inclure un court extrait de code
+* Les 4 autres questions doivent être purement conceptuelles ou situationnelles
+
+2. Quatre options de réponse
+* Formulées de manière homogène (même longueur approximative)
+* Les mauvaises réponses doivent être plausibles, pas absurdes
+* Format : "A. ...", "B. ...", "C. ...", "D. ..."
+
+3. La bonne réponse
+* Indiquer uniquement la lettre : A, B, C ou D
+
+4. L'explication
+* Expliquer POURQUOI cette réponse est correcte, pas seulement la reformuler
+* Mentionner ce qui rend les autres options incorrectes ou moins adaptées
+* Ton direct, clair, sans jargon inutile
+* 2 à 4 lignes maximum
+
+Les contraintes :
+* pas de questions sur des librairies externes
+* pas de questions pièges syntaxiques obscurs
+* chaque question doit apporter une vraie valeur pédagogique
+
+Objectif pédagogique
+* Consolider la compréhension des fondations Python
+* Développer les bons réflexes de conception
+* Identifier et corriger les erreurs de raisonnement classiques
+* Préparer à écrire un code lisible, maintenable et pythonique
+
+Format de réponse
+Réponds UNIQUEMENT avec un tableau JSON valide, sans introduction, sans markdown, sans balises de code :
+
+[
+  {
+    "bloc": "Structures de données",
+    "question": "...",
+    "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+    "reponse": "A",
+    "explication": "..."
+  }
+]
+
+Génère exactement 6 questions en suivant scrupuleusement cette structure JSON.
+
+Ne génère pas un QCM similaire au précédent qui portait sur : {last_topic}
+Réponds uniquement en {language}.

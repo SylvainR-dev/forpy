@@ -96,7 +96,9 @@
         "cat_comparaison_representation": "Comparison and representation",
         "cat_creation": "Creational",
         "cat_structure": "Structural",
-        "cat_comportement": "Behavioral"
+        "cat_comportement": "Behavioral",
+        "qcm_python": "Python Quiz",
+        "qcm_architecture": "Architecture Quiz"
     },
     "french": {
         "welcome": "Bienvenue sur FORPY",
@@ -195,6 +197,8 @@
         "cat_comparaison_representation": "Comparaison et représentation",
         "cat_creation": "Création",
         "cat_structure": "Structure",
-        "cat_comportement": "Comportement"
+        "cat_comportement": "Comportement",
+        "qcm_python": "QCM Python",
+        "qcm_architecture": "QCM Architecture"
     }
 }

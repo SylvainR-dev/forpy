@@ -432,6 +432,10 @@ def _parse_json(raw: str, sublevel: str = "") -> dict:
         )
         raise ValueError("json")
 
+    # QCM format returns a JSON array — wrap it for uniform return type
+    if isinstance(data, list):
+        return {"_qcm_list": data}
+
     missing = _REQUIRED_KEYS - data.keys()
     if missing:
         json_logger.warning("AI response missing keys: %s", missing)

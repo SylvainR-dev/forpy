@@ -1,0 +1,23 @@
+{
+  "format": "qcm",
+  "version": "1.0",
+  "fields": {
+    "bloc": "string — thème de la question (ex: Structures de données)",
+    "question": "string — la question posée",
+    "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+    "reponse": "string — lettre de la bonne réponse (A, B, C ou D)",
+    "explication": "string — pourquoi cette réponse est correcte"
+  },
+  "example": {
+    "bloc": "Structures de données",
+    "question": "Tu dois vérifier si un élément existe dans 10 000 éléments, des centaines de fois. Quelle structure choisir ?",
+    "options": [
+      "A. Une liste",
+      "B. Un tuple",
+      "C. Un set",
+      "D. Un dictionnaire avec des valeurs None"
+    ],
+    "reponse": "C",
+    "explication": "Le set est optimisé pour tester l'appartenance en O(1), contre O(n) pour une liste qui parcourt tout."
+  }
+}

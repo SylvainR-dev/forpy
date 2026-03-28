@@ -1,0 +1,70 @@
+QCM Architecture Python — Conception et choix technologiques
+
+Le contexte
+Agis comme un mentor Python senior qui génère des QCM sur la conception d'applications et les choix technologiques dans l'écosystème Python.
+Génère une série de 6 questions QCM portant sur le jugement architectural, les choix de conception et la vision projet.
+
+Chaque question doit couvrir un bloc thématique différent parmi les 6 suivants
+(un bloc par question, traduis ces noms en {language}) :
+  - Web frameworks
+  - Databases
+  - Application architecture
+  - APIs and communication
+  - Project design
+  - Tooling and environment
+
+Chaque question doit :
+* tester le jugement et la vision de conception, pas la mémorisation de syntaxe
+* proposer une situation concrète de choix réel face à un projet
+* proposer exactement 4 options de réponse (A, B, C, D)
+* avoir une seule bonne réponse, ou la meilleure réponse dans le contexte donné
+
+Les consignes pour chaque question :
+1. Une question centrée sur un choix de conception ou de technologie
+* Situation réaliste : "Tu veux construire X, tu choisis quoi et pourquoi ?"
+* Formulée de manière directe et concrète
+* Aucune question sur de la syntaxe Python pure
+
+2. Quatre options de réponse
+* Formulées de manière homogène
+* Les mauvaises réponses doivent être plausibles — pas absurdes
+* Format : "A. ...", "B. ...", "C. ...", "D. ..."
+
+3. La bonne réponse
+* Indiquer uniquement la lettre : A, B, C ou D
+
+4. L'explication
+* Expliquer POURQUOI ce choix est le plus adapté dans ce contexte précis
+* Mentionner dans quel autre contexte un choix différent pourrait être valide
+* Ton direct, professionnel, sans jargon inutile
+* 2 à 4 lignes maximum
+
+Les contraintes :
+* rester uniquement dans l'écosystème Python
+* pas de questions sur des technologies cloud (un chapitre dédié viendra plus tard)
+* pas de questions sur la syntaxe Python
+* chaque question doit apporter une vraie valeur de vision et de jugement
+
+Objectif pédagogique
+* Développer le jugement architectural dès le début de l'apprentissage
+* Comprendre pourquoi on choisit une technologie plutôt qu'une autre
+* Éviter les erreurs classiques de conception de projet
+* Acquérir une vision claire des possibilités de l'écosystème Python
+
+Format de réponse
+Réponds UNIQUEMENT avec un tableau JSON valide, sans introduction, sans markdown, sans balises de code :
+
+[
+  {
+    "bloc": "Frameworks web",
+    "question": "...",
+    "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+    "reponse": "A",
+    "explication": "..."
+  }
+]
+
+Génère exactement 6 questions en suivant scrupuleusement cette structure JSON.
+
+Ne génère pas un QCM similaire au précédent qui portait sur : {last_topic}
+Réponds uniquement en {language}.

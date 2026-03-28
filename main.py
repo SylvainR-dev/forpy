@@ -63,6 +63,7 @@ def _main(page: ft.Page):
         from screens.settings_screen import build_settings_screen
         from screens.pattern_screen import build_pattern_screen
         from screens.logic_screen import build_logic_screen
+        from screens.qcm_screen import build_qcm_screen
 
         route = page.route
         page.views.clear()
@@ -85,7 +86,14 @@ def _main(page: ft.Page):
                     controls=[ft.Text(f"Screen error: {ex}", color="red", selectable=True)],
                 ))
 
-        if route == "/settings":
+        if route == "/qcm":
+            safe_append(build_qcm_screen, page, session)
+
+        elif route == "/qcm_architecture":
+            from screens.qcm_architecture_screen import build_qcm_architecture_screen
+            safe_append(build_qcm_architecture_screen, page, session)
+
+        elif route == "/settings":
             safe_append(build_settings_screen, page, session)
 
         elif route == "/logic":
