@@ -10,7 +10,12 @@ Generate unlimited mini-exercises with AI, choose your level, and get instant co
 ## Why FORPY?
 
 Traditional exercises are repetitive and boring. While a typical learner works through 1 tedious exercise, a FORPY user discovers dozens of different ones in the same amount of time.
-This is learning through volume. — from beginner variables to expert architecture patterns.
+This is learning through volume, to become operational quickly. — from beginner variables to expert architecture patterns.
+
+---
+
+## Website
+https://for-python.com/
 
 ---
 
