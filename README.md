@@ -1,5 +1,7 @@
 # FORPY — Learn Python with AI
 
+> **AI-friendly repository.** The files `CLAUDE.md` and the `.claude/` folder are included on purpose. They give an AI coding assistant (such as Claude Code) the project context and architecture from the start, so contributors can plug the repo into an AI quickly if they want to. They are entirely optional: the project works the same without them.
+
 **Free and open-source Python learning app.**
 Generate unlimited mini-exercises with AI, choose your level, and get instant corrections.
 
